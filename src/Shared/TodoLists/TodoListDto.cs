@@ -1,9 +1,7 @@
-﻿using MauiCleanTodos.Application.Common.Mappings;
-using MauiCleanTodos.Domain.Entities;
+﻿using MauiCleanTodos.Shared.TodoItems;
 
-namespace MauiCleanTodos.Application.TodoLists.Queries.GetTodos;
-
-public class TodoListDto : IMapFrom<TodoList>
+namespace MauiCleanTodos.Shared.TodoLists;
+public class TodoListDto
 {
     public TodoListDto()
     {

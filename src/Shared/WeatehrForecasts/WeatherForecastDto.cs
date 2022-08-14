@@ -1,6 +1,5 @@
-﻿namespace MauiCleanTodos.Application.WeatherForecasts.Queries.GetWeatherForecasts;
-
-public class WeatherForecast
+﻿namespace MauiCleanTodos.Shared.WeatehrForecasts;
+public class WeatherForecastDto
 {
     public DateTime Date { get; set; }
 

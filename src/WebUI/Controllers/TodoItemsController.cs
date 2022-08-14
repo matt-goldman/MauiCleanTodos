@@ -1,9 +1,7 @@
-﻿using MauiCleanTodos.Application.Common.Models;
-using MauiCleanTodos.Application.TodoItems.Commands.CreateTodoItem;
+﻿using MauiCleanTodos.Application.TodoItems.Commands.CreateTodoItem;
 using MauiCleanTodos.Application.TodoItems.Commands.DeleteTodoItem;
 using MauiCleanTodos.Application.TodoItems.Commands.UpdateTodoItem;
-using MauiCleanTodos.Application.TodoItems.Commands.UpdateTodoItemDetail;
-using MauiCleanTodos.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+using MauiCleanTodos.Shared.TodoItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,25 +10,22 @@ namespace MauiCleanTodos.WebUI.Controllers;
 [Authorize]
 public class TodoItemsController : ApiControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<PaginatedList<TodoItemBriefDto>>> GetTodoItemsWithPagination([FromQuery] GetTodoItemsWithPaginationQuery query)
-    {
-        return await Mediator.Send(query);
-    }
-
     [HttpPost]
-    public async Task<ActionResult<int>> Create(CreateTodoItemCommand command)
+    public async Task<ActionResult<int>> Create(NewTodoItemDto item)
     {
+        var command = new CreateTodoItemCommand { Item = item };
         return await Mediator.Send(command);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdateTodoItemCommand command)
+    public async Task<ActionResult> Update(int id, TodoItemDto item)
     {
-        if (id != command.Id)
+        if (id != item.Id)
         {
             return BadRequest();
         }
+
+        var command = new UpdateTodoItemCommand { Item = item };
 
         await Mediator.Send(command);
 
@@ -38,12 +33,14 @@ public class TodoItemsController : ApiControllerBase
     }
 
     [HttpPut("[action]")]
-    public async Task<ActionResult> UpdateItemDetails(int id, UpdateTodoItemDetailCommand command)
+    public async Task<ActionResult> UpdateItemDetails(int id, TodoItemDto item)
     {
-        if (id != command.Id)
+        if (id != item.Id)
         {
             return BadRequest();
         }
+
+        var command = new UpdateTodoItemCommand { Item = item };
 
         await Mediator.Send(command);
 

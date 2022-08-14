@@ -7,6 +7,7 @@ using MauiCleanTodos.Domain.Entities;
 using MauiCleanTodos.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;
+using MauiCleanTodos.Shared.TodoItems;
 
 namespace MauiCleanTodos.Application.IntegrationTests.TodoItems.Commands;
 
@@ -17,7 +18,14 @@ public class UpdateTodoItemDetailTests : BaseTestFixture
     [Test]
     public async Task ShouldRequireValidTodoItemId()
     {
-        var command = new UpdateTodoItemCommand { Id = 99, Title = "New Title" };
+        var command = new UpdateTodoItemCommand
+        {
+            Item = new TodoItemDto
+            {
+                Id = 99,
+                Title = "New Title"
+            }
+        };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
@@ -33,16 +41,22 @@ public class UpdateTodoItemDetailTests : BaseTestFixture
 
         var itemId = await SendAsync(new CreateTodoItemCommand
         {
-            ListId = listId,
-            Title = "New Item"
+            Item = new NewTodoItemDto
+            {
+                ListId = listId,
+                Title = "New Item"
+            }
         });
 
         var command = new UpdateTodoItemDetailCommand
         {
-            Id = itemId,
-            ListId = listId,
-            Note = "This is the note.",
-            Priority = PriorityLevel.High
+            Item = new TodoItemDto
+            {
+                Id = itemId,
+                ListId = listId,
+                Note = "This is the note.",
+                Priority = (int)PriorityLevel.High
+            }
         };
 
         await SendAsync(command);
@@ -50,9 +64,9 @@ public class UpdateTodoItemDetailTests : BaseTestFixture
         var item = await FindAsync<TodoItem>(itemId);
 
         item.Should().NotBeNull();
-        item!.ListId.Should().Be(command.ListId);
-        item.Note.Should().Be(command.Note);
-        item.Priority.Should().Be(command.Priority);
+        item!.ListId.Should().Be(command.Item.ListId);
+        item.Note.Should().Be(command.Item.Note);
+        item.Priority.Should().Be((PriorityLevel)command.Item.Priority);
         item.LastModifiedBy.Should().NotBeNull();
         item.LastModifiedBy.Should().Be(userId);
         item.LastModified.Should().NotBeNull();

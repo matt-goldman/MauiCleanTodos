@@ -2,8 +2,9 @@
 using AutoMapper;
 using MauiCleanTodos.Application.Common.Mappings;
 using MauiCleanTodos.Application.Common.Models;
-using MauiCleanTodos.Application.TodoLists.Queries.GetTodos;
 using MauiCleanTodos.Domain.Entities;
+using MauiCleanTodos.Shared.TodoItems;
+using MauiCleanTodos.Shared.TodoLists;
 using NUnit.Framework;
 
 namespace MauiCleanTodos.Application.UnitTests.Common.Mappings;
@@ -15,8 +16,11 @@ public class MappingTests
 
     public MappingTests()
     {
-        _configuration = new MapperConfiguration(config => 
-            config.AddProfile<MappingProfile>());
+        _configuration = new MapperConfiguration(config =>
+        {
+            var mapperAssembly = typeof(MappingProfile).Assembly;
+            config.AddMaps(mapperAssembly);
+        });
 
         _mapper = _configuration.CreateMapper();
     }

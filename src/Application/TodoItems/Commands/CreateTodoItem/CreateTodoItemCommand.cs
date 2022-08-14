@@ -1,15 +1,14 @@
 ﻿using MauiCleanTodos.Application.Common.Interfaces;
 using MauiCleanTodos.Domain.Entities;
 using MauiCleanTodos.Domain.Events;
+using MauiCleanTodos.Shared.TodoItems;
 using MediatR;
 
 namespace MauiCleanTodos.Application.TodoItems.Commands.CreateTodoItem;
 
 public record CreateTodoItemCommand : IRequest<int>
 {
-    public int ListId { get; init; }
-
-    public string? Title { get; init; }
+    public NewTodoItemDto Item { get; set; }
 }
 
 public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemCommand, int>
@@ -25,8 +24,8 @@ public class CreateTodoItemCommandHandler : IRequestHandler<CreateTodoItemComman
     {
         var entity = new TodoItem
         {
-            ListId = request.ListId,
-            Title = request.Title,
+            ListId = request.Item.ListId,
+            Title = request.Item.Title,
             Done = false
         };
 

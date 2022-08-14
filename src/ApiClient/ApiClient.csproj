@@ -2,8 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+	  <RootNamespace>MauiCleanTodos.ApiClient</RootNamespace>
+	  <AssemblyName>MauiCleanTodos.ApiClient</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
 
 </Project>

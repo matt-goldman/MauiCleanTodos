@@ -12,7 +12,7 @@ public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCo
     {
         _context = context;
 
-        RuleFor(v => v.Title)
+        RuleFor(v => v.Summary.Title)
             .NotEmpty().WithMessage("Title is required.")
             .MaximumLength(200).WithMessage("Title must not exceed 200 characters.")
             .MustAsync(BeUniqueTitle).WithMessage("The specified title already exists.");
@@ -21,7 +21,7 @@ public class UpdateTodoListCommandValidator : AbstractValidator<UpdateTodoListCo
     public async Task<bool> BeUniqueTitle(UpdateTodoListCommand model, string title, CancellationToken cancellationToken)
     {
         return await _context.TodoLists
-            .Where(l => l.Id != model.Id)
+            .Where(l => l.Id != model.Summary.Id)
             .AllAsync(l => l.Title != title, cancellationToken);
     }
 }

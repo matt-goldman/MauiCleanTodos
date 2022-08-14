@@ -4,6 +4,7 @@ using MauiCleanTodos.Application.TodoLists.Commands.UpdateTodoList;
 using MauiCleanTodos.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.Application.IntegrationTests.TodoLists.Commands;
 
@@ -14,7 +15,14 @@ public class UpdateTodoListTests : BaseTestFixture
     [Test]
     public async Task ShouldRequireValidTodoListId()
     {
-        var command = new UpdateTodoListCommand { Id = 99, Title = "New Title" };
+        var command = new UpdateTodoListCommand
+        {
+            Summary = new TodoListSummaryDto
+            {
+                Id = 99,
+                Title = "New Title"
+            }
+        };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
@@ -33,8 +41,11 @@ public class UpdateTodoListTests : BaseTestFixture
 
         var command = new UpdateTodoListCommand
         {
-            Id = listId,
-            Title = "Other List"
+            Summary = new TodoListSummaryDto
+            {
+                Id = listId,
+                Title = "Other List"
+            }
         };
 
         (await FluentActions.Invoking(() =>
@@ -55,8 +66,11 @@ public class UpdateTodoListTests : BaseTestFixture
 
         var command = new UpdateTodoListCommand
         {
-            Id = listId,
-            Title = "Updated List Title"
+            Summary = new TodoListSummaryDto
+            {
+                Id = listId,
+                Title = "Updated List Title"
+            }
         };
 
         await SendAsync(command);
@@ -64,7 +78,7 @@ public class UpdateTodoListTests : BaseTestFixture
         var list = await FindAsync<TodoList>(listId);
 
         list.Should().NotBeNull();
-        list!.Title.Should().Be(command.Title);
+        list!.Title.Should().Be(command.Summary.Title);
         list.LastModifiedBy.Should().NotBeNull();
         list.LastModifiedBy.Should().Be(userId);
         list.LastModified.Should().NotBeNull();

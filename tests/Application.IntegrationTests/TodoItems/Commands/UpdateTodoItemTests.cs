@@ -5,6 +5,7 @@ using MauiCleanTodos.Application.TodoLists.Commands.CreateTodoList;
 using MauiCleanTodos.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using MauiCleanTodos.Shared.TodoItems;
 
 namespace MauiCleanTodos.Application.IntegrationTests.TodoItems.Commands;
 
@@ -15,7 +16,14 @@ public class UpdateTodoItemTests : BaseTestFixture
     [Test]
     public async Task ShouldRequireValidTodoItemId()
     {
-        var command = new UpdateTodoItemCommand { Id = 99, Title = "New Title" };
+        var command = new UpdateTodoItemCommand
+        {
+            Item = new TodoItemDto
+            {
+                Id = 99,
+                Title = "New Title"
+            }
+        };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
@@ -31,14 +39,20 @@ public class UpdateTodoItemTests : BaseTestFixture
 
         var itemId = await SendAsync(new CreateTodoItemCommand
         {
-            ListId = listId,
-            Title = "New Item"
+            Item = new NewTodoItemDto
+            {
+                ListId = listId,
+                Title = "New Item"
+            }
         });
 
         var command = new UpdateTodoItemCommand
         {
-            Id = itemId,
-            Title = "Updated Item Title"
+            Item = new TodoItemDto
+            {
+                Id = itemId,
+                Title = "Updated Item Title"
+            }
         };
 
         await SendAsync(command);
@@ -46,7 +60,7 @@ public class UpdateTodoItemTests : BaseTestFixture
         var item = await FindAsync<TodoItem>(itemId);
 
         item.Should().NotBeNull();
-        item!.Title.Should().Be(command.Title);
+        item!.Title.Should().Be(command.Item.Title);
         item.LastModifiedBy.Should().NotBeNull();
         item.LastModifiedBy.Should().Be(userId);
         item.LastModified.Should().NotBeNull();

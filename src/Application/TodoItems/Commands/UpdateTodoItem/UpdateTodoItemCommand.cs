@@ -1,17 +1,14 @@
 ﻿using MauiCleanTodos.Application.Common.Exceptions;
 using MauiCleanTodos.Application.Common.Interfaces;
 using MauiCleanTodos.Domain.Entities;
+using MauiCleanTodos.Shared.TodoItems;
 using MediatR;
 
 namespace MauiCleanTodos.Application.TodoItems.Commands.UpdateTodoItem;
 
 public record UpdateTodoItemCommand : IRequest
 {
-    public int Id { get; init; }
-
-    public string? Title { get; init; }
-
-    public bool Done { get; init; }
+    public TodoItemDto Item { get; set; }
 }
 
 public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemCommand>
@@ -26,15 +23,15 @@ public class UpdateTodoItemCommandHandler : IRequestHandler<UpdateTodoItemComman
     public async Task<Unit> Handle(UpdateTodoItemCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.TodoItems
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+            .FindAsync(new object[] { request.Item.Id }, cancellationToken);
 
         if (entity == null)
         {
-            throw new NotFoundException(nameof(TodoItem), request.Id);
+            throw new NotFoundException(nameof(TodoItem), request.Item.Id);
         }
 
-        entity.Title = request.Title;
-        entity.Done = request.Done;
+        entity.Title = request.Item.Title;
+        entity.Done = request.Item.Done;
 
         await _context.SaveChangesAsync(cancellationToken);
 

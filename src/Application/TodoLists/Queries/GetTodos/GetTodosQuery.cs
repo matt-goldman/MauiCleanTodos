@@ -3,6 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MauiCleanTodos.Application.Common.Interfaces;
 using MauiCleanTodos.Application.Common.Security;
 using MauiCleanTodos.Domain.Enums;
+using MauiCleanTodos.Shared.PriorityLevels;
+using MauiCleanTodos.Shared.TodoLists;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

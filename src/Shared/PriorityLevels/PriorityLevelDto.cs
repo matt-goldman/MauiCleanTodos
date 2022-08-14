@@ -1,5 +1,4 @@
-﻿namespace MauiCleanTodos.Application.TodoLists.Queries.GetTodos;
-
+﻿namespace MauiCleanTodos.Shared.PriorityLevels;
 public class PriorityLevelDto
 {
     public int Value { get; set; }

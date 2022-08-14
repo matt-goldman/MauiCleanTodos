@@ -6,7 +6,9 @@ public class CreateTodoItemCommandValidator : AbstractValidator<CreateTodoItemCo
 {
     public CreateTodoItemCommandValidator()
     {
-        RuleFor(v => v.Title)
+        RuleFor(v => v.Item).NotNull();
+
+        RuleFor(v => v.Item.Title)
             .MaximumLength(200)
             .NotEmpty();
     }

@@ -5,6 +5,7 @@ using MauiCleanTodos.Application.TodoLists.Commands.CreateTodoList;
 using MauiCleanTodos.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using MauiCleanTodos.Shared.TodoItems;
 
 namespace MauiCleanTodos.Application.IntegrationTests.TodoItems.Commands;
 
@@ -31,8 +32,11 @@ public class DeleteTodoItemTests : BaseTestFixture
 
         var itemId = await SendAsync(new CreateTodoItemCommand
         {
-            ListId = listId,
-            Title = "New Item"
+            Item = new NewTodoItemDto
+            {
+                ListId = listId,
+                Title = "New Item"
+            }
         });
 
         await SendAsync(new DeleteTodoItemCommand(itemId));

@@ -17,6 +17,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>
