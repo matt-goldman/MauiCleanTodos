@@ -2,8 +2,7 @@ import { Component, TemplateRef, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TodoListsClient, TodoItemsClient,
   TodoListDto, TodoItemDto, PriorityLevelDto,
-  CreateTodoListCommand, UpdateTodoListCommand,
-  CreateTodoItemCommand, UpdateTodoItemCommand
+  TodoListSummaryDto, NewTodoItemDto
 } from '../web-api-client';
 
 @Component({
@@ -66,7 +65,7 @@ export class TodoComponent implements OnInit {
       items: []
     } as TodoListDto;
 
-    this.listsClient.create(list as CreateTodoListCommand).subscribe(
+    this.listsClient.create(this.newListEditor.title).subscribe(
       result => {
         list.id = result;
         this.lists.push(list);
@@ -96,7 +95,7 @@ export class TodoComponent implements OnInit {
   }
 
   updateListOptions() {
-    const list = this.listOptionsEditor as UpdateTodoListCommand;
+    const list = this.listOptionsEditor as TodoListSummaryDto;
     this.listsClient.update(this.selectedList.id, list).subscribe(
       () => {
         (this.selectedList.title = this.listOptionsEditor.title),
@@ -134,7 +133,7 @@ export class TodoComponent implements OnInit {
   }
 
   updateItemDetails(): void {
-    const item = this.itemDetailsEditor as UpdateTodoItemCommand;
+    const item = this.itemDetailsEditor as TodoItemDto;
     this.itemsClient.updateItemDetails(this.selectedItem.id, item).subscribe(
       () => {
         if (this.selectedItem.listId !== this.itemDetailsEditor.listId) {
@@ -187,7 +186,7 @@ export class TodoComponent implements OnInit {
     if (item.id === 0) {
       this.itemsClient
         .create({ ...item, listId: this.selectedList.id
-          } as CreateTodoItemCommand)
+          } as NewTodoItemDto)
         .subscribe(
           result => {
             item.id = result;
