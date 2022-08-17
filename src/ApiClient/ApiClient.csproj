@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
 	  <RootNamespace>MauiCleanTodos.ApiClient</RootNamespace>
 	  <AssemblyName>MauiCleanTodos.ApiClient</AssemblyName>
+	  <!--TODO: Split out the MAUI and Blazor functionality into different projects-->
+	  <UseMaui>true</UseMaui>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>

@@ -1,8 +1,7 @@
-﻿using IdentityModel.OidcClient.Browser;
-using MauiCleanTodos.ApiClient.Authentication;
+﻿using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services;
 using MauiCleanTodos.ApiClient.Storage;
-using Microsoft.Extensions.DependencyInjection;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.ApiClient;
 public static class DependencyInjection

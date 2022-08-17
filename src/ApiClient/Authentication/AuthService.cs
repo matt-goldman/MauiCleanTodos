@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using CommunityToolkit.Mvvm.Messaging;
 using IdentityModel.OidcClient;
-using IdentityModel.OidcClient.Browser;
 using MauiCleanTodos.ApiClient.Storage;
 using Microsoft.Extensions.Options;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.ApiClient.Authentication;
 
@@ -19,6 +19,8 @@ public interface IAuthService
 public class AuthService : IAuthService
 {
     public const string AuthenticatedClient = "AuthenticatedClient";
+
+    public static string RedirectUri { get; set; } = string.Empty;
 
     private readonly OidcClientOptions _options;
     private readonly ISecureStorageProvider _secureStorageProvider;
@@ -40,6 +42,7 @@ public class AuthService : IAuthService
         };
         _secureStorageProvider = secureStorageProvider;
         _messenger = messenger;
+        RedirectUri = options.Value.RedirectUri;
     }
 
     internal static string AccessToken { get; set; } = String.Empty;

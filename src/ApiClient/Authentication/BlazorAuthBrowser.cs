@@ -1,4 +1,5 @@
 ﻿using IdentityModel.OidcClient.Browser;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.ApiClient.Authentication;
 public class BlazorAuthBrowser : IBrowser
