@@ -13,18 +13,10 @@ public static class DependencyInjection
     /// <param name="clientOptions">IdentityServer config and API base URI</param>
     /// <param name="browserType">.NET MAUI or Blazor</param>
     /// <returns></returns>
-    public static IServiceCollection RegisterApiClient(this IServiceCollection services, ApiClientOptions clientOptions, BrowserType browserType)
+    public static IServiceCollection RegisterApiClient(this IServiceCollection services, ApiClientOptions clientOptions)
     {
-        if (browserType == BrowserType.Blazor)
-        {
-            services.AddSingleton<IBrowser, BlazorAuthBrowser>();
-            services.AddSingleton<ISecureStorageProvider, BlazorStorageProvider>();
-        }
-        else if (browserType == BrowserType.Maui)
-        {
-            services.AddSingleton<IBrowser, MauiAuthBroswer>();
-            services.AddSingleton<ISecureStorageProvider, MauiStorageProvider>();
-        }
+        services.AddSingleton<IBrowser, MauiAuthBroswer>();
+        services.AddSingleton<ISecureStorageProvider, MauiStorageProvider>();
 
         services.AddOptions<ApiClientOptions>();
 

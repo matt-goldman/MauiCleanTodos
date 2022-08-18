@@ -49,11 +49,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ApiClient\ApiClient.csproj" />
+	  <Folder Include="Services\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Services\" />
+	  <ProjectReference Include="..\..\MauiApiClient\MauiApiClient.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
