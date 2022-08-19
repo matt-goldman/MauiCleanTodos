@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="Primary">#512BD4</Color>
+    <Color x:Key="Primary">#528ABE</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
     <Color x:Key="White">White</Color>
@@ -12,7 +12,7 @@
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
     <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray400">#9F9F9F</Color>
     <Color x:Key="Gray500">#6E6E6E</Color>
     <Color x:Key="Gray600">#404040</Color>
     <Color x:Key="Gray900">#212121</Color>
@@ -40,5 +40,10 @@
     <Color x:Key="Blue100Accent">#3E8EED</Color>
     <Color x:Key="Blue200Accent">#72ACF1</Color>
     <Color x:Key="Blue300Accent">#A7CBF6</Color>
+
+    <Color x:Key="MauiCleanDark">#525151</Color>
+
+    <Color x:Key="BallGradientStart">#A71DFC</Color>
+    <Color x:Key="BallGradientEnd">#59F6FA41</Color>
 
 </ResourceDictionary>

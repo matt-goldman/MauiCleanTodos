@@ -3,6 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiCleanTodos.App.MainPage">
 
-    
+    <Grid RowDefinitions="8*, 20*"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill">
+        <Ellipse Grid.Row="0"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center"
+                 WidthRequest="530"
+                 HeightRequest="560"
+                 TranslationY="-200">
+            <Ellipse.Fill>
+                <LinearGradientBrush StartPoint="1,0.5"
+                                     EndPoint="0,0.5">
+                    <GradientStop Color="{StaticResource BallGradientStart}"
+                                  Offset="0"/>
+                    <GradientStop Color="{StaticResource BallGradientEnd}"
+                                  Offset="1"/>
+                </LinearGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <FlexLayout Grid.Row="0"
+                    VerticalOptions="End"
+                    JustifyContent="SpaceBetween">
+            <Image Source="todo_bot"
+                   HeightRequest="200"
+                   WidthRequest="200"/>
+
+            <Label Text="Maui Todo"
+                   TextColor="#DCDCDC"
+                   HorizontalOptions="End"
+                   HorizontalTextAlignment="End"
+                   VerticalOptions="End"
+                   FontSize="48"
+                   FontFamily="Viga"/>
+        </FlexLayout>
+    </Grid>
 
 </ContentPage>

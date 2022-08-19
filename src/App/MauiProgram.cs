@@ -13,6 +13,9 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("Sora-VariableFont_wght.ttf", "Sora");
+				fonts.AddFont("Viga-Regular.ttf", "Viga");
+				fonts.AddFont("FluentSystemIcons-Regular.ttf", "FluentIcons");
 			});
 
 		builder.Services.RegisterApiClient(new ApiClientOptions());
