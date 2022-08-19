@@ -2,7 +2,7 @@
 using MauiCleanTodos.ApiClient.Services;
 
 namespace MauiCleanTodos.App.ViewModels;
-public class MainViewModel
+public partial class MainViewModel : BaseViewModel
 {
 	private readonly ITodoListsService _todoListsService;
 	private readonly IAuthService _authService;
