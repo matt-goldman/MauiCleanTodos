@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
              x:Class="MauiCleanTodos.App.MainPage">
 
     <Grid RowDefinitions="8*, 20*"
@@ -28,16 +29,90 @@
                     JustifyContent="SpaceBetween">
             <Image Source="todo_bot"
                    HeightRequest="200"
-                   WidthRequest="200"/>
+                   WidthRequest="200">
+                <Image.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Image.Shadow>
+            </Image>
 
-            <Label Text="Maui Todo"
-                   TextColor="#DCDCDC"
+            <Label TextColor="#DCDCDC"
                    HorizontalOptions="End"
                    HorizontalTextAlignment="End"
-                   VerticalOptions="End"
+                   Margin="20"
+                   VerticalOptions="Center"
                    FontSize="48"
-                   FontFamily="Viga"/>
+                   FontFamily="Viga">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="MAUI"
+                              FontFamily="Viga"/>
+                        <Span Text="{x:Static system:Environment.NewLine}"/>
+                        <Span Text="Todo"
+                              FontFamily="Viga"/>
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Label.Shadow>
+            </Label>
         </FlexLayout>
+
+        <VerticalStackLayout Grid.Row="1"
+                             x:Name="WelcomStack"
+                             Margin="0,50,0,0"
+                             Spacing="80">
+
+            <Label FontFamily="Viga"
+                   FontSize="48"
+                   TextColor="#DCDCDC"
+                   HorizontalTextAlignment="Center"
+                   Text="Welcome!">
+                <Label.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Label.Shadow>
+            </Label>
+
+            <Label FontFamily="Viga"
+                   FontSize="24"
+                   TextColor="#DCDCDC"
+                   HorizontalTextAlignment="Center"
+                   Text="Login to get started">
+                <Label.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Label.Shadow>
+            </Label>
+
+            <Border BackgroundColor="{StaticResource Primary}"
+                    StrokeThickness="0"
+                    WidthRequest="130"
+                    HeightRequest="40"
+                    StrokeShape="RoundRectangle 20">
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Border.Shadow>
+                <Label Text="Login"
+                       TextColor="#DCDCDC"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       HorizontalOptions="Center"/>
+            </Border>
+        </VerticalStackLayout>
+                             
     </Grid>
 
 </ContentPage>
