@@ -15,7 +15,7 @@
 		<ApplicationTitle>MauiCleanTodos.App</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mauicleantodos.app</ApplicationId>
+		<ApplicationId>com.goldie.mauicleantodos.app</ApplicationId>
 		<ApplicationIdGuid>a9f09bed-0039-429f-a61d-8b5b1a7ab1fa</ApplicationIdGuid>
 
 		<!-- Versions -->
@@ -57,6 +57,11 @@
 
 	<ItemGroup>
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="1.0.7" />
+	  <PackageReference Include="Goldie.MauiPlugins.PageResolver.Autoreg" Version="1.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>

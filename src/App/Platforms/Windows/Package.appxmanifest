@@ -24,7 +24,15 @@
 
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
-      <uap:VisualElements
+		<Extensions>
+			<uap:Extension Category="windows.protocol">
+				<uap:Protocol Name="auth.com.goldie.mauicleantodos.app">
+					<uap:DisplayName>Auth</uap:DisplayName>
+				</uap:Protocol>
+			</uap:Extension>
+		</Extensions>
+
+		<uap:VisualElements
         DisplayName="$placeholder$"
         Description="$placeholder$"
         Square150x150Logo="$placeholder$.png"

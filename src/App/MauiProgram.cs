@@ -2,7 +2,7 @@
 
 namespace MauiCleanTodos.App;
 
-public static class MauiProgram
+public static partial class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
@@ -18,8 +18,21 @@ public static class MauiProgram
 				fonts.AddFont("FluentSystemIcons-Regular.ttf", "FluentIcons");
 			});
 
-		builder.Services.RegisterApiClient(new ApiClientOptions());
+		var options = new ApiClientOptions
+		{
+			Authority	= "https://rwds.goforgoldman.com",
+			BaseUrl		= "https://rwds.goforgoldman.com",
+			ClientId	= "mct-mobile-app",
+			RedirectUri	= "auth.com.goldie.mauicleantodos.app://callback",
+			Scope		= "MauiCleanTodos.WebUIAPI"
+        };
+
+		builder.Services.RegisterApiClient(options);
+
+		UseAutoreg(builder.Services);
 
 		return builder.Build();
 	}
+
+	static partial void UseAutoreg(IServiceCollection services);
 }

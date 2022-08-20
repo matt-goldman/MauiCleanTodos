@@ -43,7 +43,11 @@
 
     <Color x:Key="MauiCleanDark">#525151</Color>
 
+    <Color x:Key="OffWhite">#DCDCDC</Color>
+
     <Color x:Key="BallGradientStart">#A71DFC</Color>
     <Color x:Key="BallGradientEnd">#59F6FA41</Color>
+
+    <Color x:Key="Fifteen">#26000000</Color>
 
 </ResourceDictionary>

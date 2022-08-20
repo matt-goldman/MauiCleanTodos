@@ -24,6 +24,46 @@
             </Ellipse.Fill>
         </Ellipse>
 
+        <BoxView Grid.Row="0"
+                 VerticalOptions="Start"
+                 HeightRequest="54"
+                 BackgroundColor="Black"
+                 Opacity="0.15"/>
+
+        <Grid x:Name="LoginDisplay"
+              Padding="0,10,0,0"
+              IsVisible="{Binding LoggedIn}"
+              ColumnDefinitions="2*,6*,2*">
+            <Label Grid.Column="1"
+                   Text="{Binding UserName, StringFormat='Welcome, {0}!'}"
+                   TextColor="White"
+                   FontFamily="Viga"
+                   FontSize="20"
+                   HorizontalOptions="Center">
+                <Label.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Label.Shadow>
+            </Label>
+
+            <Label Grid.Column="2"
+                   TextColor="{StaticResource OffWhite}"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Text="&#xe0c4;"
+                   FontFamily="FluentIcons">
+                <Label.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Label.Shadow>
+            </Label>
+        </Grid>
+
         <FlexLayout Grid.Row="0"
                     VerticalOptions="End"
                     JustifyContent="SpaceBetween">
@@ -38,7 +78,7 @@
                 </Image.Shadow>
             </Image>
 
-            <Label TextColor="#DCDCDC"
+            <Label TextColor="{StaticResource OffWhite}"
                    HorizontalOptions="End"
                    HorizontalTextAlignment="End"
                    Margin="20"
@@ -70,7 +110,7 @@
 
             <Label FontFamily="Viga"
                    FontSize="48"
-                   TextColor="#DCDCDC"
+                   TextColor="{StaticResource OffWhite}"
                    HorizontalTextAlignment="Center"
                    Text="Welcome!">
                 <Label.Shadow>
@@ -83,7 +123,7 @@
 
             <Label FontFamily="Viga"
                    FontSize="24"
-                   TextColor="#DCDCDC"
+                   TextColor="{StaticResource OffWhite}"
                    HorizontalTextAlignment="Center"
                    Text="Login to get started">
                 <Label.Shadow>
@@ -99,6 +139,10 @@
                     WidthRequest="130"
                     HeightRequest="40"
                     StrokeShape="RoundRectangle 20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding LoginCommand}"/>
+                </Border.GestureRecognizers>
                 <Border.Shadow>
                     <Shadow Brush="Black"
                             Offset="10,10"
@@ -106,10 +150,11 @@
                             Opacity="0.5" />
                 </Border.Shadow>
                 <Label Text="Login"
-                       TextColor="#DCDCDC"
+                       TextColor="{StaticResource OffWhite}"
                        VerticalOptions="Center"
                        FontSize="16"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"
+                       InputTransparent="True"/>
             </Border>
         </VerticalStackLayout>
                              

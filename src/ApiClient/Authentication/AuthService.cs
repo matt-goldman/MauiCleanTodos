@@ -24,13 +24,11 @@ public class AuthService : IAuthService
 
     private readonly OidcClientOptions _options;
     private readonly ISecureStorageProvider _secureStorageProvider;
-    private readonly IMessenger _messenger;
 
     public AuthService(
         IOptions<ApiClientOptions> options,
         IBrowser browser,
-        ISecureStorageProvider secureStorageProvider,
-        IMessenger messenger)
+        ISecureStorageProvider secureStorageProvider)
     {
         _options = new OidcClientOptions
         {
@@ -41,7 +39,6 @@ public class AuthService : IAuthService
             Browser = browser
         };
         _secureStorageProvider = secureStorageProvider;
-        _messenger = messenger;
         RedirectUri = options.Value.RedirectUri;
     }
 
@@ -124,7 +121,7 @@ public class AuthService : IAuthService
 
         if (userName is not null)
         {
-            _messenger.Send(new UserUpdatedMessage(userName));
+            WeakReferenceMessenger.Default.Send(new UserUpdatedMessage(userName));
         }
     }
 

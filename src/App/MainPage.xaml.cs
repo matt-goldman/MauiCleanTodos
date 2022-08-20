@@ -1,13 +1,10 @@
-﻿namespace MauiCleanTodos.App;
+﻿using Microsoft.Extensions.Options;
+
+namespace MauiCleanTodos.App;
 
 public partial class MainPage : ContentPage
 {
 	private readonly MainViewModel _viewModel;
-
-	public MainPage()
-	{
-		InitializeComponent();
-	}
 
 	public MainPage(MainViewModel viewModel)
 	{
