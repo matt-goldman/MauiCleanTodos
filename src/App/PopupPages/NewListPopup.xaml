@@ -4,7 +4,7 @@
            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
            xmlns:controls="clr-namespace:MauiCleanTodos.App.Controls"
            xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
-           Size="330,330"
+           Size="330,340"
            Color="Transparent"
            x:Class="MauiCleanTodos.App.PopupPages.NewListPopup">
     <Border StrokeThickness="0"
@@ -29,6 +29,8 @@
 
             <CollectionView ItemsSource="{Binding Colours}"
                             SelectionMode="Single"
+                            HeightRequest="55"
+                            Margin="5,0"
                             SelectionChanged="ColoursSelectionChanged">
                 <CollectionView.Resources>
                     <Style TargetType="Border">
@@ -76,7 +78,21 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="Ahoyhoy"/>
+            <Button WidthRequest="175"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Text="OK"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Background="{StaticResource Tertiary}">
+                <Button.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="5"
+                            Opacity="0.5" />
+                </Button.Shadow>
+            </Button>
 
         </VerticalStackLayout>
     </Border>
