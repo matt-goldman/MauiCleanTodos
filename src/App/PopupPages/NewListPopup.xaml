@@ -88,7 +88,7 @@
                     Background="{StaticResource Tertiary}">
                 <Button.Shadow>
                     <Shadow Brush="Black"
-                            Offset="10,10"
+                            Offset="5,5"
                             Radius="5"
                             Opacity="0.5" />
                 </Button.Shadow>
