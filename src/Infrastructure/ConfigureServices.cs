@@ -1,4 +1,5 @@
-﻿using MauiCleanTodos.Application.Common.Interfaces;
+﻿using Duende.IdentityServer.Models;
+using MauiCleanTodos.Application.Common.Interfaces;
 using MauiCleanTodos.Infrastructure.Files;
 using MauiCleanTodos.Infrastructure.Identity;
 using MauiCleanTodos.Infrastructure.Persistence;
@@ -39,7 +40,8 @@ public static class ConfigureServices
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         services.AddIdentityServer()
-            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
+            .AddInMemoryClients(configuration.GetSection("IdentityServer:Clients").Get<List<Client>>());
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddTransient<IIdentityService, IdentityService>();

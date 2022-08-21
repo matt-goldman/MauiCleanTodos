@@ -19,7 +19,7 @@ public class MauiAuthBroswer : IBrowser
         string code = result.Properties["code"];
         string scope = result.Properties["scope"];
         string state = result.Properties["state"];
-        string sessionState = result.Properties["session_state"];
-        return $"{AuthService.RedirectUri}#code={code}&scope={scope}&state={state}&session_state={sessionState}";
+        //string sessionState = result.Properties["session_state"];
+        return $"{AuthService.RedirectUri}#code={code}&scope={scope}&state={state}";// &session_state={sessionState}";
     }
 }

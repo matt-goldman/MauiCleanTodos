@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using IdentityModel.OidcClient;
 using MauiCleanTodos.ApiClient.Storage;
-using Microsoft.Extensions.Options;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.ApiClient.Authentication;
@@ -23,23 +22,25 @@ public class AuthService : IAuthService
     public static string RedirectUri { get; set; } = string.Empty;
 
     private readonly OidcClientOptions _options;
+    private readonly IBrowser _browser;
     private readonly ISecureStorageProvider _secureStorageProvider;
 
     public AuthService(
-        IOptions<ApiClientOptions> options,
+        ApiClientOptions options,
         IBrowser browser,
         ISecureStorageProvider secureStorageProvider)
     {
         _options = new OidcClientOptions
         {
-            Authority = options.Value.Authority,
-            ClientId = options.Value.ClientId,
-            Scope = options.Value.Scope,
-            RedirectUri = options.Value.RedirectUri,
+            Authority = options.Authority,
+            ClientId = options.ClientId,
+            Scope = options.Scope,
+            RedirectUri = options.RedirectUri,
             Browser = browser
         };
+        _browser = browser;
         _secureStorageProvider = secureStorageProvider;
-        RedirectUri = options.Value.RedirectUri;
+        RedirectUri = options.RedirectUri;
     }
 
     internal static string AccessToken { get; set; } = String.Empty;
@@ -63,7 +64,7 @@ public class AuthService : IAuthService
             }
 
             await SetRefreshToken(loginResult.RefreshToken);
-            SetLoggedInState(loginResult?.AccessToken ?? String.Empty);
+            SetLoggedInState(loginResult?.AccessToken ?? String.Empty, loginResult?.IdentityToken ?? string.Empty);
             return true;
         }
         catch (Exception ex)
@@ -107,17 +108,17 @@ public class AuthService : IAuthService
         }
 
         await SetRefreshToken(result.RefreshToken);
-        SetLoggedInState(result?.AccessToken ?? String.Empty);
+        SetLoggedInState(result?.AccessToken ?? String.Empty, result?.IdentityToken ?? string.Empty);
         return true;
     }
 
-    private void SetLoggedInState(string token)
+    private void SetLoggedInState(string token, string idToken)
     {
         AccessToken = token;
 
-        var claims = ParseToken(token);
+        var claims = ParseToken(idToken);
 
-        var userName = claims?.Claims?.FirstOrDefault(c => c.Type == "Username")?.Value;
+        var userName = claims?.Claims?.FirstOrDefault(c => c.Type == "name")?.Value;
 
         if (userName is not null)
         {
