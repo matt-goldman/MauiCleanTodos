@@ -22,8 +22,8 @@ public static partial class MauiProgram
 
         var options = new ApiClientOptions
 		{
-			Authority	= "https://e24a-159-196-124-207.ngrok.io",
-			BaseUrl		= "https://e24a-159-196-124-207.ngrok.io",
+			Authority	= "https://rwds.goforgoldman.com",
+			BaseUrl		= "https://rwds.goforgoldman.com",
 			ClientId	= "mctmobileapp",
 			RedirectUri	= "auth.com.goldie.mauicleantodos.app://callback",
 			Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access"
