@@ -3,6 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
            xmlns:controls="clr-namespace:MauiCleanTodos.App.Controls"
+           xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
            Size="330,330"
            Color="Transparent"
            x:Class="MauiCleanTodos.App.PopupPages.NewListPopup">
@@ -25,6 +26,58 @@
                    Text="New Todo List"/>
 
             <controls:MctEntry Placeholder="List title"/>
+
+            <CollectionView ItemsSource="{Binding Colours}"
+                            SelectionMode="Single"
+                            SelectionChanged="ColoursSelectionChanged">
+                <CollectionView.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="VisualStateManager.VisualStateGroups">
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="StrokeThickness"
+                                                    Value="0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="StrokeThickness"
+                                                    Value="7"/>
+                                            <Setter Property="BackgroundColor"
+                                                    Value="Transparent"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </Setter>
+                    </Style>
+                    <converters:ColourEnumToColorConverter x:Key="EnumToColor"/>
+                </CollectionView.Resources>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal"
+                                       ItemSpacing="24"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="{StaticResource Gray600}"
+                                HeightRequest="55"
+                                WidthRequest="55"
+                                StrokeShape="Ellipse"
+                                Padding="7">
+                            <Ellipse Fill="{Binding Colour, Converter={StaticResource EnumToColor}}"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Ahoyhoy"/>
+
         </VerticalStackLayout>
     </Border>
 </mct:Popup>
