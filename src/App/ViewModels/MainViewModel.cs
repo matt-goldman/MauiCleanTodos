@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Maui.Views;
 using MauiCleanTodos.ApiClient.Authentication;
+using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
@@ -16,6 +18,8 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	string userName;
 
 	public ObservableCollection<TodoListDto> TodoLists { get; set; } = new();
+
+	public Page Parent { get; set; }
 
 	public MainViewModel(ITodoListsService todoListsService, IAuthService authService)
 	{
@@ -47,7 +51,9 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	[RelayCommand]
 	private async Task AddList()
 	{
+		var newListPopup = new NewListPopup();
 
+		var result = await Parent.ShowPopupAsync(newListPopup);
 	}
 
 	private async Task RefreshLists()

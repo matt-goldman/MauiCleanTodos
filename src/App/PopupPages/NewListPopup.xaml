@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           Size="330,330"
+           Color="Transparent"
+           x:Class="MauiCleanTodos.App.PopupPages.NewListPopup">
+    <Border StrokeThickness="0"
+            BackgroundColor="{StaticResource Gray300}"
+            StrokeShape="RoundRectangle 30">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Offset="10,10"
+                    Radius="10"
+                    Opacity="0.5" />
+        </Border.Shadow>
+        <VerticalStackLayout Spacing="30"
+                             Padding="0,30,0,0">
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   FontSize="20"
+                   TextColor="Black"
+                   Text="New Todo List"/>
+        </VerticalStackLayout>
+    </Border>
+</mct:Popup>
