@@ -11,7 +11,7 @@ public class WeatherService : BaseService, IWeatherService
 {
     private readonly WeatherForecastClient _client;
 
-    public WeatherService(IHttpClientFactory httpClientFactory, IOptions<ApiClientOptions> options) : base(httpClientFactory, options)
+    public WeatherService(IHttpClientFactory httpClientFactory, ApiClientOptions options) : base(httpClientFactory, options)
     {
         _client = new WeatherForecastClient(_baseUrl, _httpClient);
     }

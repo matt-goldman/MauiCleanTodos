@@ -3,15 +3,30 @@
 namespace MauiCleanTodos.ApiClient.Services;
 public interface ITodoListsService
 {
+    Task<List<TodoListDto>> GetTodos();
 
+    List<PriorityLevelDto> PriorityLevels { get; }
 }
 
 public class TodoListsService : BaseService, ITodoListsService
 {
     private readonly TodoListsClient _client;
 
-    public TodoListsService(IHttpClientFactory httpClientFactory, IOptions<ApiClientOptions> options) : base(httpClientFactory, options)
+    private List<PriorityLevelDto> _priorityLevels = new();
+
+    public TodoListsService(IHttpClientFactory httpClientFactory, ApiClientOptions options) : base(httpClientFactory, options)
     {
-        _client = new TodoListsClient(options.Value.BaseUrl, _httpClient);
+        _client = new TodoListsClient(options.BaseUrl, _httpClient);
+    }
+
+    public List<PriorityLevelDto> PriorityLevels { get => _priorityLevels; }
+
+    public async Task<List<TodoListDto>> GetTodos()
+    {
+        var vm = await _client.GetAsync();
+
+        _priorityLevels = vm.PriorityLevels.ToList();
+
+        return vm.Lists.ToList();
     }
 }

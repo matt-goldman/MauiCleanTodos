@@ -1,4 +1,5 @@
-﻿using MauiCleanTodos.ApiClient;
+﻿using CommunityToolkit.Maui;
+using MauiCleanTodos.ApiClient;
 
 namespace MauiCleanTodos.App;
 
@@ -16,9 +17,10 @@ public static partial class MauiProgram
 				fonts.AddFont("Sora-VariableFont_wght.ttf", "Sora");
 				fonts.AddFont("Viga-Regular.ttf", "Viga");
 				fonts.AddFont("FluentSystemIcons-Regular.ttf", "FluentIcons");
-			});
+			})
+			.UseMauiCommunityToolkit();
 
-		var options = new ApiClientOptions
+        var options = new ApiClientOptions
 		{
 			Authority	= "https://e24a-159-196-124-207.ngrok.io",
 			BaseUrl		= "https://e24a-159-196-124-207.ngrok.io",

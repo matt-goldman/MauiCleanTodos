@@ -15,6 +15,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 
+    // Add to enable IdentityServer to work with tunneling software like PacketRiot or ngrok
+    app.UseForwardedHeaders();
+
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
     {

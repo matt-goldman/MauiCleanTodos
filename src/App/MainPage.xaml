@@ -2,7 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
              x:Class="MauiCleanTodos.App.MainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <mct:InvertedBoolConverter x:Key="InverseBool"/>
+            <converters:ListColourToColorConverter x:Key="ListColourToColor"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="8*, 20*"
           HorizontalOptions="Fill"
@@ -105,6 +113,7 @@
 
         <VerticalStackLayout Grid.Row="1"
                              x:Name="WelcomStack"
+                             IsVisible="{Binding LoggedIn, Converter={StaticResource InverseBool}}"
                              Margin="0,50,0,0"
                              Spacing="80">
 
@@ -157,7 +166,89 @@
                        InputTransparent="True"/>
             </Border>
         </VerticalStackLayout>
-                             
+
+        <VerticalStackLayout Grid.Row="1"
+                             Spacing="40"
+                             IsVisible="{Binding LoggedIn}">
+            <Border BackgroundColor="{StaticResource Primary}"
+                    StrokeThickness="0"
+                    WidthRequest="130"
+                    HeightRequest="40"
+                    StrokeShape="RoundRectangle 20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1"
+                                          Command="{Binding AddListCommand}"/>
+                </Border.GestureRecognizers>
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Border.Shadow>
+                <Label Text="+ Add list"
+                       TextColor="{StaticResource OffWhite}"
+                       VerticalOptions="Center"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       InputTransparent="True"/>
+            </Border>
+
+            <CollectionView ItemsSource="{Binding TodoLists}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20"
+                                       Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItem IconImageSource="delete"
+                                               Text="Delete"
+                                               BackgroundColor="Transparent"/>
+                                </SwipeItems> 
+                            </SwipeView.RightItems>
+                            <Border BackgroundColor="{Binding Colour, Converter={StaticResource ListColourToColor}}"
+                                    StrokeThickness="0"
+                                    WidthRequest="300"
+                                    HeightRequest="70"
+                                    StrokeShape="RoundRectangle 35"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black"
+                                            Offset="10,10"
+                                            Radius="10"
+                                            Opacity="0.5" />
+                                </Border.Shadow>
+                                <Label Text="{Binding Title}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       HorizontalTextAlignment="Center"
+                                       FontSize="20">
+                                    <Label.Shadow>
+                                        <Shadow Brush="Black"
+                                                Offset="10,10"
+                                                Radius="10"
+                                                Opacity="0.5" />
+                                    </Label.Shadow>
+                                </Label>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+        <ActivityIndicator Color="{StaticResource Primary}"
+                           Grid.Row="1"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           WidthRequest="50"
+                           HeightRequest="50"
+                           IsRunning="True"
+                           IsVisible="{Binding IsBusy}"/>
+
     </Grid>
 
 </ContentPage>

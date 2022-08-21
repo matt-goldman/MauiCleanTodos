@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Messaging;
 using MauiCleanTodos.ApiClient.Authentication;
+using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
 public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessage>
@@ -12,6 +14,8 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 	[ObservableProperty]
 	string userName;
+
+	public ObservableCollection<TodoListDto> TodoLists { get; set; } = new();
 
 	public MainViewModel(ITodoListsService todoListsService, IAuthService authService)
 	{
@@ -28,6 +32,35 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	[RelayCommand]
 	private async Task Login()
 	{
+		IsBusy = true;
+
 		LoggedIn = await _authService.LoginAsync();
+
+		if (LoggedIn)
+		{
+			await RefreshLists();
+		}
+
+		IsBusy = false;
+	}
+
+	[RelayCommand]
+	private async Task AddList()
+	{
+
+	}
+
+	private async Task RefreshLists()
+	{
+		IsBusy = true;
+
+		var lists = await _todoListsService.GetTodos();
+
+		foreach (var list in lists)
+		{
+			TodoLists.Add(list);
+		}
+
+		IsBusy = false;
 	}
 }

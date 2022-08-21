@@ -18,16 +18,6 @@ public static class DependencyInjection
         services.AddSingleton<IBrowser, MauiAuthBroswer>();
         services.AddSingleton<ISecureStorageProvider, MauiStorageProvider>();
 
-        //services.AddOptions<ApiClientOptions>()
-        //    .Configure(opt =>
-        //    {
-        //        opt.ClientId    = clientOptions.ClientId;
-        //        opt.RedirectUri = clientOptions.RedirectUri;
-        //        opt.Authority   = clientOptions.Authority;
-        //        opt.BaseUrl     = clientOptions.BaseUrl;
-        //        opt.Scope       = clientOptions.Scope;
-        //    });
-
         services.AddSingleton(clientOptions);
 
         services.AddSingleton<AuthHandler>();

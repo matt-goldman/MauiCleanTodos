@@ -6,6 +6,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -44,6 +45,12 @@ public static class ConfigureServices
             });
 
             configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+        });
+
+        // Add this to allow IdentityServer to work with tunneling software like PacketRiot or ngrok
+        services.Configure<ForwardedHeadersOptions>(opt =>
+        {
+            opt.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
         });
 
         return services;

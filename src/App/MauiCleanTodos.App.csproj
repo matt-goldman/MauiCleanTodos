@@ -57,6 +57,7 @@
 	  <None Remove="Resources\Fonts\FluentSystemIcons-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Sora-VariableFont_wght.ttf" />
 	  <None Remove="Resources\Fonts\Viga-Regular.ttf" />
+	  <None Remove="Resources\Images\delete.svg" />
 	  <None Remove="Resources\Images\todo_bot.png" />
 	</ItemGroup>
 
@@ -65,6 +66,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
 	  <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="1.0.7" />
 	  <PackageReference Include="Goldie.MauiPlugins.PageResolver.Autoreg" Version="1.0.5" />
 	</ItemGroup>

@@ -8,10 +8,10 @@ public class BaseService
 
     protected string _baseUrl;
 
-    public BaseService(IHttpClientFactory httpClientFactory, IOptions<ApiClientOptions> options)
+    public BaseService(IHttpClientFactory httpClientFactory, ApiClientOptions options)
     {
         _httpClient = httpClientFactory.CreateClient(AuthService.AuthenticatedClient);
 
-        _baseUrl = options.Value.BaseUrl;
+        _baseUrl = options.BaseUrl;
     }
 }
