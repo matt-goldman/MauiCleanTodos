@@ -6,7 +6,11 @@ namespace MauiCleanTodos.App.PopupPages;
 
 public partial class NewListPopup : Popup
 {
-	public ObservableCollection<test> Colours { get; set; } = new();
+	public ObservableCollection<ColourContainer> Colours { get; set; } = new();
+
+	public ColourContainer SelectedColour { get; set; }
+
+	public string Title { get; set; }
 
 	public NewListPopup()
 	{
@@ -15,17 +19,24 @@ public partial class NewListPopup : Popup
 		
 		foreach(var colour in (Colours[])Enum.GetValues(typeof(Colours)))
 		{
-			Colours.Add(new test { Colour = colour});
+			Colours.Add(new ColourContainer { Colour = colour});
 		}
 	}
 
-	private void ColoursSelectionChanged(object sender, SelectionChangedEventArgs e)
+	[RelayCommand]
+	private void Ok()
 	{
+		var todo = new NewTodoDto
+		{
+			Title = Title,
+			Colour = SelectedColour.Colour
+		};
 
-    }
+		Close(todo);
+	}
 }
 
-public class test
+public class ColourContainer
 {
 	public Colours Colour { get; set; }
 }

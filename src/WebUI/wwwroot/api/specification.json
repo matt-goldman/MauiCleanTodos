@@ -208,17 +208,18 @@
           "TodoLists"
         ],
         "operationId": "TodoLists_Create",
-        "parameters": [
-          {
-            "name": "title",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            },
-            "x-position": 1
-          }
-        ],
+        "requestBody": {
+          "x-name": "newTodo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewTodoDto"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "",
@@ -485,6 +486,42 @@
             }
           }
         }
+      },
+      "NewTodoDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "colour": {
+            "$ref": "#/components/schemas/Colours"
+          }
+        }
+      },
+      "Colours": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "White",
+          "Red",
+          "Orange",
+          "Yellow",
+          "Green",
+          "Blue",
+          "Purple",
+          "Grey"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
       },
       "TodoListSummaryDto": {
         "type": "object",

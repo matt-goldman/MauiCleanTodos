@@ -4,6 +4,7 @@
              xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
+             x:Name="TodoListsPage"
              x:Class="MauiCleanTodos.App.MainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -187,8 +188,7 @@
 
             <CollectionView ItemsSource="{Binding TodoLists}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="20"
-                                       Orientation="Vertical"/>
+                    <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -196,36 +196,32 @@
                             <SwipeView.RightItems>
                                 <SwipeItems Mode="Reveal">
                                     <SwipeItem IconImageSource="delete"
-                                               Text="Delete"
-                                               BackgroundColor="Transparent"/>
+                                               BackgroundColor="Transparent"
+                                               Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Name=TodoListsPage}}"
+                                               CommandParameter="{Binding Id}"/>
                                 </SwipeItems> 
                             </SwipeView.RightItems>
-                            <Border BackgroundColor="{Binding Colour, Converter={StaticResource ListColourToColor}}"
-                                    StrokeThickness="0"
-                                    WidthRequest="300"
-                                    HeightRequest="70"
-                                    StrokeShape="RoundRectangle 35"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center">
-                                <Border.Shadow>
-                                    <Shadow Brush="Black"
-                                            Offset="10,10"
-                                            Radius="10"
-                                            Opacity="0.5" />
-                                </Border.Shadow>
-                                <Label Text="{Binding Title}"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"
-                                       HorizontalTextAlignment="Center"
-                                       FontSize="20">
-                                    <Label.Shadow>
+                            <Grid HeightRequest="100">
+                                <Border BackgroundColor="{Binding Colour, Converter={StaticResource ListColourToColor}}"
+                                        StrokeThickness="0"
+                                        WidthRequest="300"
+                                        HeightRequest="70"
+                                        StrokeShape="RoundRectangle 35"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                    <Border.Shadow>
                                         <Shadow Brush="Black"
                                                 Offset="10,10"
                                                 Radius="10"
                                                 Opacity="0.5" />
-                                    </Label.Shadow>
-                                </Label>
-                            </Border>
+                                    </Border.Shadow>
+                                    <Label Text="{Binding Title}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           HorizontalTextAlignment="Center"
+                                           FontSize="20"/>
+                                </Border>
+                            </Grid>
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

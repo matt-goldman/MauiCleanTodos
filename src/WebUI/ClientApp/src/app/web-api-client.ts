@@ -247,7 +247,7 @@ export class TodoItemsClient implements ITodoItemsClient {
 
 export interface ITodoListsClient {
     get(): Observable<TodosVm>;
-    create(title: string | null | undefined): Observable<number>;
+    create(newTodo: NewTodoDto): Observable<number>;
     get2(id: number): Observable<FileResponse>;
     update(id: number, summary: TodoListSummaryDto): Observable<FileResponse>;
     delete(id: number): Observable<FileResponse>;
@@ -314,16 +314,18 @@ export class TodoListsClient implements ITodoListsClient {
         return _observableOf(null as any);
     }
 
-    create(title: string | null | undefined): Observable<number> {
-        let url_ = this.baseUrl + "/api/TodoLists?";
-        if (title !== undefined && title !== null)
-            url_ += "title=" + encodeURIComponent("" + title) + "&";
+    create(newTodo: NewTodoDto): Observable<number> {
+        let url_ = this.baseUrl + "/api/TodoLists";
         url_ = url_.replace(/[?&]$/, "");
 
+        const content_ = JSON.stringify(newTodo);
+
         let options_ : any = {
+            body: content_,
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             })
         };
@@ -836,6 +838,57 @@ export interface ITodoListDto {
     title?: string | undefined;
     colour?: string | undefined;
     items?: TodoItemDto[];
+}
+
+export class NewTodoDto implements INewTodoDto {
+    title?: string;
+    colour?: Colours;
+
+    constructor(data?: INewTodoDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.colour = _data["colour"];
+        }
+    }
+
+    static fromJS(data: any): NewTodoDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new NewTodoDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["colour"] = this.colour;
+        return data;
+    }
+}
+
+export interface INewTodoDto {
+    title?: string;
+    colour?: Colours;
+}
+
+export enum Colours {
+    White = 0,
+    Red = 1,
+    Orange = 2,
+    Yellow = 3,
+    Green = 4,
+    Blue = 5,
+    Purple = 6,
+    Grey = 7,
 }
 
 export class TodoListSummaryDto implements ITodoListSummaryDto {

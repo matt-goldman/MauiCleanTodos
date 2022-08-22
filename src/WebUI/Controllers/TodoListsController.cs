@@ -38,9 +38,13 @@ public class TodoListsController : ApiControllerBase
     //}
 
     [HttpPost]
-    public async Task<ActionResult<int>> Create(string title)
+    public async Task<ActionResult<int>> Create(NewTodoDto newTodo)
     {
-        var command = new CreateTodoListCommand { Title = title };
+        var command = new CreateTodoListCommand
+        {
+            Colour  = newTodo.Colour,
+            Title   = newTodo.Title
+        };
         return await Mediator.Send(command);
     }
 

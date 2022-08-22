@@ -25,13 +25,14 @@
                    TextColor="Black"
                    Text="New Todo List"/>
 
-            <controls:MctEntry Placeholder="List title"/>
+            <controls:MctEntry Placeholder="List title"
+                               Text="{Binding Title}"/>
 
             <CollectionView ItemsSource="{Binding Colours}"
                             SelectionMode="Single"
                             HeightRequest="55"
                             Margin="5,0"
-                            SelectionChanged="ColoursSelectionChanged">
+                            SelectedItem="{Binding SelectedColour}">
                 <CollectionView.Resources>
                     <Style TargetType="Border">
                         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -64,6 +65,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Stroke="{StaticResource Gray600}"
+                                BackgroundColor="Transparent"
                                 HeightRequest="55"
                                 WidthRequest="55"
                                 StrokeShape="Ellipse"
@@ -85,6 +87,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     TextColor="White"
+                    Command="{Binding OkCommand}"
                     Background="{StaticResource Tertiary}">
                 <Button.Shadow>
                     <Shadow Brush="Black"

@@ -6,6 +6,10 @@ public interface ITodoListsService
     Task<List<TodoListDto>> GetTodos();
 
     List<PriorityLevelDto> PriorityLevels { get; }
+
+    Task DeleteTodoList(int id);
+
+    Task<int> NewTodoList(NewTodoDto newTodo);
 }
 
 public class TodoListsService : BaseService, ITodoListsService
@@ -21,6 +25,11 @@ public class TodoListsService : BaseService, ITodoListsService
 
     public List<PriorityLevelDto> PriorityLevels { get => _priorityLevels; }
 
+    public async Task DeleteTodoList(int id)
+    {
+        await _client.DeleteAsync(id);
+    }
+
     public async Task<List<TodoListDto>> GetTodos()
     {
         var vm = await _client.GetAsync();
@@ -28,5 +37,10 @@ public class TodoListsService : BaseService, ITodoListsService
         _priorityLevels = vm.PriorityLevels.ToList();
 
         return vm.Lists.ToList();
+    }
+
+    public async Task<int> NewTodoList(NewTodoDto newTodo)
+    {
+        return await _client.CreateAsync(newTodo);
     }
 }

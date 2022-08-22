@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
+           x:Class="MauiCleanTodos.App.PopupPages.ConfirmPopup"
+           Color="Transparent"
+           Size="300,300">
+    <Border StrokeThickness="0"
+            BackgroundColor="{StaticResource Gray300}"
+            StrokeShape="RoundRectangle 30">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Offset="10,10"
+                    Radius="10"
+                    Opacity="0.5" />
+        </Border.Shadow>
+        <VerticalStackLayout Spacing="30">
+            <VerticalStackLayout.Resources>
+                <ResourceDictionary>
+                    <converters:DestructiveToColorConverter x:Key="DesctructiveConverter"/>
+                </ResourceDictionary>
+            </VerticalStackLayout.Resources>
+            <Label Text="{Binding ActionText}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="20"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black"/>
+
+            <Label Text="Are you sure?"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"
+                   TextColor="Black"/>
+
+            <FlexLayout JustifyContent="SpaceAround">
+                <Button WidthRequest="130"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource OffWhite}"
+                        BackgroundColor="{StaticResource Primary}"
+                        FontSize="16">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="10,10"
+                                Radius="10"
+                                Opacity="0.5" />
+                    </Button.Shadow>
+                </Button>
+
+                <Button WidthRequest="130"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        Text="Delete"
+                        Command="{Binding ConfirmCommand}"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource OffWhite}"
+                        BackgroundColor="{Binding IsDestructive, Converter={StaticResource DesctructiveConverter}}"
+                        FontSize="16">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="10,10"
+                                Radius="10"
+                                Opacity="0.5" />
+                    </Button.Shadow>
+                </Button>
+            </FlexLayout>
+        </VerticalStackLayout>
+    </Border>
+</mct:Popup>
