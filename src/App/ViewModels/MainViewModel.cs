@@ -4,6 +4,8 @@ using CommunityToolkit.Maui.Views;
 using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoLists;
+using BottomSheet;
+using MauiCleanTodos.App.Controls;
 
 namespace MauiCleanTodos.App.ViewModels;
 public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessage>
@@ -83,6 +85,14 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 			await RefreshLists();
 		}
+	}
+
+	[RelayCommand]
+	private void ShowList(int listId)
+	{
+		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
+
+		Parent.ShowBottomSheet(new TodoItemsView(selectedList.Items.ToList()), true);
 	}
 
 	private async Task RefreshLists()

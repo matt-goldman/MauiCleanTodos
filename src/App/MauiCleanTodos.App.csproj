@@ -77,7 +77,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Controls\TodoItemsView.xaml.cs">
+	    <DependentUpon>TodoItemsView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Controls\MctEntry.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Controls\TodoItemsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\ListPage.xaml">

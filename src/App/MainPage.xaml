@@ -202,25 +202,23 @@
                                 </SwipeItems> 
                             </SwipeView.RightItems>
                             <Grid HeightRequest="100">
-                                <Border BackgroundColor="{Binding Colour, Converter={StaticResource ListColourToColor}}"
-                                        StrokeThickness="0"
-                                        WidthRequest="300"
+                                <Button BackgroundColor="{Binding Colour, Converter={StaticResource ListColourToColor}}"
                                         HeightRequest="70"
-                                        StrokeShape="RoundRectangle 35"
+                                        WidthRequest="300"
+                                        CornerRadius="35"
                                         HorizontalOptions="Center"
-                                        VerticalOptions="Center">
-                                    <Border.Shadow>
+                                        VerticalOptions="Center"
+                                        Command="{Binding Path=BindingContext.ShowListCommand, Source={x:Reference Name=TodoListsPage}}"
+                                        CommandParameter="{Binding Id}"
+                                        TextColor="Black"
+                                        Text="{Binding Title}">
+                                    <Button.Shadow>
                                         <Shadow Brush="Black"
                                                 Offset="10,10"
                                                 Radius="10"
                                                 Opacity="0.5" />
-                                    </Border.Shadow>
-                                    <Label Text="{Binding Title}"
-                                           HorizontalOptions="Center"
-                                           VerticalOptions="Center"
-                                           HorizontalTextAlignment="Center"
-                                           FontSize="20"/>
-                                </Border>
+                                    </Button.Shadow>
+                                </Button>
                             </Grid>
                         </SwipeView>
                     </DataTemplate>
