@@ -28,7 +28,11 @@ public class CreateTodoListCommandHandler : IRequestHandler<CreateTodoListComman
 
         entity.Title = request.Title;
 
-        entity.Colour = Colour.From(request.Colour.ToString());
+        string hexColour = request.Colour.ToString("X");
+
+        string hexColourString = $"#{hexColour.TrimStart('0')}";
+
+        entity.Colour = Colour.From(hexColourString);
 
         _context.TodoLists.Add(entity);
 

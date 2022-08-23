@@ -503,24 +503,24 @@
         "type": "integer",
         "description": "",
         "x-enumNames": [
-          "White",
+          "Blue",
+          "Purple",
+          "Grey",
+          "Green",
           "Red",
           "Orange",
           "Yellow",
-          "Green",
-          "Blue",
-          "Purple",
-          "Grey"
+          "White"
         ],
         "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
+          6711039,
+          10053324,
+          10066329,
+          13434777,
+          16734003,
+          16761600,
+          16777062,
+          16777215
         ]
       },
       "TodoListSummaryDto": {

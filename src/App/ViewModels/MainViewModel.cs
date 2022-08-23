@@ -80,6 +80,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 	private async Task RefreshLists()
 	{
+		TodoLists.Clear();
 		var lists = await _todoListsService.GetTodos();
 
 		foreach (var list in lists)

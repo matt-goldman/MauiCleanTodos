@@ -881,14 +881,14 @@ export interface INewTodoDto {
 }
 
 export enum Colours {
-    White = 0,
-    Red = 1,
-    Orange = 2,
-    Yellow = 3,
-    Green = 4,
-    Blue = 5,
-    Purple = 6,
-    Grey = 7,
+    Blue = 6711039,
+    Purple = 10053324,
+    Grey = 10066329,
+    Green = 13434777,
+    Red = 16734003,
+    Orange = 16761600,
+    Yellow = 16777062,
+    White = 16777215,
 }
 
 export class TodoListSummaryDto implements ITodoListSummaryDto {

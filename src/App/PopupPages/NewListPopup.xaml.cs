@@ -28,7 +28,7 @@ public partial class NewListPopup : Popup
 	{
 		var todo = new NewTodoDto
 		{
-			Title = Title,
+			Title = TitleEntry.Text,
 			Colour = SelectedColour.Colour
 		};
 

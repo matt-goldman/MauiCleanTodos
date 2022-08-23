@@ -9,7 +9,7 @@
             StrokeShape="RoundRectangle 5">
         <Entry WidthRequest="250"
                Placeholder="{Binding Placeholder}"
-               Text="{Binding Text}"
+               TextChanged="Entry_TextChanged"
                VerticalOptions="Center"
                HorizontalOptions="Center"
                Margin="20,0,0,0"
