@@ -10,6 +10,8 @@ public partial class NewListPopup : Popup
 
 	public ColourContainer SelectedColour { get; set; }
 
+	private bool _canSave => SelectedColour != null && !string.IsNullOrWhiteSpace(TitleEntry.Text);
+
 	public string Title { get; set; }
 
 	public NewListPopup()
@@ -26,13 +28,20 @@ public partial class NewListPopup : Popup
 	[RelayCommand]
 	private void Ok()
 	{
-		var todo = new NewTodoDto
+		if (_canSave)
 		{
-			Title = TitleEntry.Text,
-			Colour = SelectedColour.Colour
-		};
+            var todo = new NewTodoDto
+            {
+                Title = TitleEntry.Text,
+                Colour = SelectedColour.Colour
+            };
 
-		Close(todo);
+            Close(todo);
+        }
+		else
+		{
+			ValidationMessage.IsVisible = true;
+		}
 	}
 }
 

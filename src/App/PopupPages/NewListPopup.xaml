@@ -18,12 +18,25 @@
         </Border.Shadow>
         <VerticalStackLayout Spacing="30"
                              Padding="0,30,0,0">
-            <Label HorizontalOptions="Center"
+            <VerticalStackLayout>
+                <Label HorizontalOptions="Center"
                    VerticalOptions="Center"
                    HorizontalTextAlignment="Center"
                    FontSize="20"
                    TextColor="Black"
                    Text="New Todo List"/>
+
+                <Label Text="Please add a title and select a colour"
+                       FontSize="8"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Center"
+                       Margin="8"
+                       Padding="0"
+                       x:Name="ValidationMessage"
+                       IsVisible="false"
+                       TextColor="Red"/>
+            </VerticalStackLayout>
 
             <controls:MctEntry Placeholder="List title"
                                x:Name="TitleEntry"/>
