@@ -1,4 +1,5 @@
-﻿using MauiCleanTodos.Application.TodoItems.Queries.GetTodoItemsWithPagination;
+﻿using System.Net;
+using MauiCleanTodos.Application.TodoItems.Queries.GetTodoItemsWithPagination;
 using MauiCleanTodos.Application.TodoLists.Commands.CreateTodoList;
 using MauiCleanTodos.Application.TodoLists.Commands.DeleteTodoList;
 using MauiCleanTodos.Application.TodoLists.Commands.UpdateTodoList;
@@ -64,6 +65,7 @@ public class TodoListsController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> Delete(int id)
     {
         await Mediator.Send(new DeleteTodoListCommand(id));

@@ -55,20 +55,27 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		var result = await Parent.ShowPopupAsync(newListPopup);
 
-		var newTodo = result as NewTodoDto;
+		if (result is not null)
+		{
+			var newTodo = result as NewTodoDto;
 
-		await _todoListsService.NewTodoList(newTodo);
+			await _todoListsService.NewTodoList(newTodo);
 
-		await RefreshLists();
+			await RefreshLists(); 
+		}
+
+		IsBusy = false;
 	}
 
 	[RelayCommand]
 	private async Task Delete(int id)
 	{
 		var confirmPopup = new ConfirmPopup("Delete list", true);
-		var sure = await Parent.ShowPopupAsync(confirmPopup);
+		var result = await Parent.ShowPopupAsync(confirmPopup);
 
-		if ((bool)sure)
+		bool sure = (bool?)result ?? false;
+
+		if (sure)
 		{
 			IsBusy = true;
 

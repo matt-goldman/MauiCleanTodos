@@ -5,7 +5,7 @@
            xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
            x:Class="MauiCleanTodos.App.PopupPages.ConfirmPopup"
            Color="Transparent"
-           Size="300,300">
+           Size="300,200">
     <Border StrokeThickness="0"
             BackgroundColor="{StaticResource Gray300}"
             StrokeShape="RoundRectangle 30">
@@ -15,7 +15,9 @@
                     Radius="10"
                     Opacity="0.5" />
         </Border.Shadow>
-        <VerticalStackLayout Spacing="30">
+        <VerticalStackLayout Spacing="30"
+                             VerticalOptions="Center"
+                             Padding="0,10,0,0">
             <VerticalStackLayout.Resources>
                 <ResourceDictionary>
                     <converters:DestructiveToColorConverter x:Key="DesctructiveConverter"/>
@@ -34,8 +36,9 @@
                    HorizontalTextAlignment="Center"
                    TextColor="Black"/>
 
-            <FlexLayout JustifyContent="SpaceAround">
-                <Button WidthRequest="130"
+            <FlexLayout JustifyContent="SpaceAround"
+                        HeightRequest="120">
+                <Button WidthRequest="100"
                         HeightRequest="40"
                         CornerRadius="20"
                         Text="Cancel"
@@ -53,7 +56,7 @@
                     </Button.Shadow>
                 </Button>
 
-                <Button WidthRequest="130"
+                <Button WidthRequest="100"
                         HeightRequest="40"
                         CornerRadius="20"
                         Text="Delete"

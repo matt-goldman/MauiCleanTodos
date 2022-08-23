@@ -250,7 +250,7 @@ export interface ITodoListsClient {
     create(newTodo: NewTodoDto): Observable<number>;
     get2(id: number): Observable<FileResponse>;
     update(id: number, summary: TodoListSummaryDto): Observable<FileResponse>;
-    delete(id: number): Observable<FileResponse>;
+    delete(id: number): Observable<void>;
 }
 
 @Injectable({
@@ -469,7 +469,7 @@ export class TodoListsClient implements ITodoListsClient {
         return _observableOf(null as any);
     }
 
-    delete(id: number): Observable<FileResponse> {
+    delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/TodoLists/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -480,7 +480,6 @@ export class TodoListsClient implements ITodoListsClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
             })
         };
 
@@ -491,25 +490,24 @@ export class TodoListsClient implements ITodoListsClient {
                 try {
                     return this.processDelete(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse>;
+                    return _observableThrow(e) as any as Observable<void>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<FileResponse>;
+                return _observableThrow(response_) as any as Observable<void>;
         }));
     }
 
-    protected processDelete(response: HttpResponseBase): Observable<FileResponse> {
+    protected processDelete(response: HttpResponseBase): Observable<void> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (response as any).error instanceof Blob ? (response as any).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        if (status === 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
