@@ -186,7 +186,9 @@
                 </Button.Shadow>
             </Button>
 
-            <CollectionView ItemsSource="{Binding TodoLists}">
+            <CollectionView ItemsSource="{Binding TodoLists}"
+                            HeightRequest="500"
+                            VerticalOptions="Center">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
