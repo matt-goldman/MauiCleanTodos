@@ -2,47 +2,66 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiCleanTodos.App.Controls.TodoItemsView"
-             BackgroundColor="Transparent"
-             HeightRequest="700">
-    <VerticalStackLayout>
-        <Button WidthRequest="130"
-                HeightRequest="40"
-                CornerRadius="20"
-                Text="+ Add Todo item"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                TextColor="{StaticResource OffWhite}"
-                BackgroundColor="{StaticResource Primary}"
-                FontSize="16">
-            <Button.Shadow>
-                <Shadow Brush="Black"
-                        Offset="10,10"
-                        Radius="10"
-                        Opacity="0.5" />
-            </Button.Shadow>
-        </Button>
+             xmlns:converters="clr-namespace:MauiCleanTodos.App.Converters"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Name="TodosView"
+             BackgroundColor="Transparent">
+    <Border BackgroundColor="{StaticResource BottomSheetBackground}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 30,30,0,0">
+        <VerticalStackLayout Padding="0,20"
+                             Spacing="30">
+            <Button WidthRequest="130"
+                    HeightRequest="40"
+                    CornerRadius="20"
+                    Text="+ Add Todo item"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource OffWhite}"
+                    BackgroundColor="{StaticResource Primary}"
+                    FontSize="16">
+                <Button.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="10,10"
+                            Radius="10"
+                            Opacity="0.5" />
+                </Button.Shadow>
+            </Button>
 
-        <CollectionView x:Name="TodoItemsCollection"
-                        HeightRequest="700"
-                        ItemsSource="{Binding TodoItems}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="30, *"
-                          WidthRequest="300"
-                          Margin="0,20">
-                        <CheckBox Grid.Column="0"
-                                  HorizontalOptions="Center"
-                                  VerticalOptions="Start"
-                                  IsChecked="{Binding Done}"/>
+            <CollectionView x:Name="TodoItemsCollection"
+                            HeightRequest="700"
+                            ItemsSource="{Binding TodoItems}">
+                <CollectionView.Resources>
+                    <ResourceDictionary>
+                        <converters:BoolToTextDecorationsConverter x:Key="DoneToDecorations"/>
+                    </ResourceDictionary>
+                </CollectionView.Resources>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="30, *"
+                              WidthRequest="300"
+                              Margin="0,20">
+                            <CheckBox Grid.Column="0"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Start"
+                                      IsChecked="{Binding Done}">
+                                <CheckBox.Behaviors>
+                                    <toolkit:EventToCommandBehavior EventName="CheckedChanged"
+                                                                    Command="{Binding Source={x:Reference TodosView}, Path=BindingContext.ItemCheckedCommand}"
+                                                                    CommandParameter="{Binding .}"/>
+                                </CheckBox.Behaviors>
+                            </CheckBox>
 
-                        <Label Grid.Column="1"
-                               FontSize="20"
-                               TextColor="{StaticResource TodoItemColour}"
-                               VerticalOptions="Start"
-                               Text="{Binding Title}"/>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+                            <Label Grid.Column="1"
+                                   FontSize="20"
+                                   TextColor="{StaticResource TodoItemColour}"
+                                   VerticalOptions="Start"
+                                   Text="{Binding Title}"
+                                   TextDecorations="{Binding Done, Converter={StaticResource DoneToDecorations}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Border>
 </ContentView>

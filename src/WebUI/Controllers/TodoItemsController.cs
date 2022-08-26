@@ -1,4 +1,5 @@
-﻿using MauiCleanTodos.Application.TodoItems.Commands.CreateTodoItem;
+﻿using System.Net;
+using MauiCleanTodos.Application.TodoItems.Commands.CreateTodoItem;
 using MauiCleanTodos.Application.TodoItems.Commands.DeleteTodoItem;
 using MauiCleanTodos.Application.TodoItems.Commands.UpdateTodoItem;
 using MauiCleanTodos.Shared.TodoItems;
@@ -18,6 +19,7 @@ public class TodoItemsController : ApiControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> Update(int id, TodoItemDto item)
     {
         if (id != item.Id)
@@ -33,6 +35,7 @@ public class TodoItemsController : ApiControllerBase
     }
 
     [HttpPut("[action]")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> UpdateItemDetails(int id, TodoItemDto item)
     {
         if (id != item.Id)
@@ -48,6 +51,7 @@ public class TodoItemsController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> Delete(int id)
     {
         await Mediator.Send(new DeleteTodoItemCommand(id));

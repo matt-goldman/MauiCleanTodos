@@ -54,7 +54,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Platforms\Android\Resources\values\styles.xml" />
 	  <None Remove="Resources\Fonts\FluentSystemIcons-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Sora-VariableFont_wght.ttf" />
 	  <None Remove="Resources\Fonts\Viga-Regular.ttf" />

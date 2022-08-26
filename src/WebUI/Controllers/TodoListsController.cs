@@ -50,6 +50,7 @@ public class TodoListsController : ApiControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType((int)HttpStatusCode.NoContent)]
     public async Task<ActionResult> Update(int id, TodoListSummaryDto summary)
     {
         if (id != summary.Id)

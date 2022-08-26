@@ -3,4 +3,11 @@
     <color name="colorPrimary">#512BD4</color>
     <color name="colorPrimaryDark">#2B0B98</color>
     <color name="colorAccent">#2B0B98</color>
+	<style name="MauiCleanTodoTheme" parent="@style/Maui.SplashTheme">
+		<item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+	</style>
+
+	<style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+		<item name="android:background">@android:color/holo_blue_bright</item>
+	</style>
 </resources>

@@ -6,11 +6,15 @@ using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoLists;
 using BottomSheet;
 using MauiCleanTodos.App.Controls;
+using MauiCleanTodos.ApiClient.Services.Messages;
+using MauiCleanTodos.Shared.TodoItems;
+using Maui.Plugins.PageResolver;
 
 namespace MauiCleanTodos.App.ViewModels;
 public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessage>
 {
 	private readonly ITodoListsService _todoListsService;
+	private readonly ITodoItemsService _todoItemsService;
 	private readonly IAuthService _authService;
 
 	[ObservableProperty]
@@ -23,11 +27,15 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 	public Page Parent { get; set; }
 
-	public MainViewModel(ITodoListsService todoListsService, IAuthService authService)
+	public MainViewModel(ITodoListsService todoListsService, ITodoItemsService todoItemsService, IAuthService authService)
 	{
 		_todoListsService = todoListsService;
+		_todoItemsService = todoItemsService;
 		_authService = authService;
-		WeakReferenceMessenger.Default.Register<UserUpdatedMessage>(this);
+		WeakReferenceMessenger.Default.Register(this);
+
+		WeakReferenceMessenger.Default.Register<TodoItemUpdated>(this, async (r, m) => await UpdateTodoItem(m.Value));
+
 	}
 
 	public void Receive(UserUpdatedMessage message)
@@ -35,7 +43,12 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 		UserName = message.Value;
 	}
 
-	[RelayCommand]
+    private async Task UpdateTodoItem(TodoItemDto item)
+    {
+		await _todoItemsService.UpdateTodoItem(item);
+    }
+
+    [RelayCommand]
 	private async Task Login()
 	{
 		IsBusy = true;
@@ -92,7 +105,11 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	{
 		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
 
-		Parent.ShowBottomSheet(new TodoItemsView(selectedList.Items.ToList()), true);
+		var itemsView = new TodoItemsView(selectedList.Items.ToList());
+
+		//itemsView.BackgroundColor = Colors.Transparent;
+
+        Parent.ShowBottomSheet(itemsView, true);
 	}
 
 	private async Task RefreshLists()

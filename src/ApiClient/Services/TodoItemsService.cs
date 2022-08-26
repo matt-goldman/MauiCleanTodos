@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace MauiCleanTodos.ApiClient.Services;
+﻿namespace MauiCleanTodos.ApiClient.Services;
 
 public interface ITodoItemsService
 {
-
+    Task UpdateTodoItem(TodoItemDto todo);
 }
 
 public class TodoItemsService : BaseService, ITodoItemsService
@@ -14,5 +12,12 @@ public class TodoItemsService : BaseService, ITodoItemsService
     public TodoItemsService(IHttpClientFactory httpClientFactory, ApiClientOptions options) : base(httpClientFactory, options)
     {
         _client = new TodoItemsClient(_baseUrl, _httpClient);
+
+
+    }
+
+    public async Task UpdateTodoItem(TodoItemDto todo)
+    {
+        await _client.UpdateAsync(todo.Id, todo);
     }
 }

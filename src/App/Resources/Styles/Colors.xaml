@@ -52,4 +52,6 @@
     
     <Color x:Key="Fifteen">#26000000</Color>
 
+    <Color x:Key="BottomSheetBackground">#C2C2C2</Color>
+
 </ResourceDictionary>
