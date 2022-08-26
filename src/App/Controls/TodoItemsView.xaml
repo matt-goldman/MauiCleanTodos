@@ -44,7 +44,8 @@
                             <CheckBox Grid.Column="0"
                                       HorizontalOptions="Center"
                                       VerticalOptions="Start"
-                                      IsChecked="{Binding Done}">
+                                      IsChecked="{Binding Done}"
+                                      x:Name="TodoCheck">
                                 <CheckBox.Behaviors>
                                     <toolkit:EventToCommandBehavior EventName="CheckedChanged"
                                                                     Command="{Binding Source={x:Reference TodosView}, Path=BindingContext.ItemCheckedCommand}"
@@ -57,7 +58,7 @@
                                    TextColor="{StaticResource TodoItemColour}"
                                    VerticalOptions="Start"
                                    Text="{Binding Title}"
-                                   TextDecorations="{Binding Done, Converter={StaticResource DoneToDecorations}}"/>
+                                   TextDecorations="{Binding Source={x:Reference TodoCheck}, Path=IsChecked, Converter={StaticResource DoneToDecorations}}"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
