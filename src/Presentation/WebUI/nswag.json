@@ -207,7 +207,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../ApiClient/MauiCleanTodos.Client.g.cs",
+      "output": "../ClientPackages/ApiClientBase/MauiCleanTodos.Client.g.cs",
       "newLineBehavior": "Auto"
     }
   }
