@@ -50,8 +50,8 @@ public class UpdateTodoListTests : BaseTestFixture
 
         (await FluentActions.Invoking(() =>
             SendAsync(command))
-                .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title")))
-                .And.Errors["Title"].Should().Contain("The specified title already exists.");
+                .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Summary.Title")))
+                .And.Errors["Summary.Title"].Should().Contain("The specified title already exists.");
     }
 
     [Test]
