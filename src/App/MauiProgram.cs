@@ -29,7 +29,7 @@ public static partial class MauiProgram
 			Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access"
         };
 
-		builder.Services.RegisterApiClient(options);
+		builder.Services.RegisterMauiClient(options);
 
 		UseAutoreg(builder.Services);
 

@@ -1,5 +1,4 @@
 ﻿using MauiCleanTodos.ApiClient.Authentication;
-using MauiCleanTodos.ApiClient.Services;
 using MauiCleanTodos.ApiClient.Storage;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
@@ -13,22 +12,14 @@ public static class DependencyInjection
     /// <param name="clientOptions">IdentityServer config and API base URI</param>
     /// <param name="browserType">.NET MAUI or Blazor</param>
     /// <returns></returns>
-    public static IServiceCollection RegisterApiClient(this IServiceCollection services, ApiClientOptions clientOptions)
+    public static IServiceCollection RegisterMauiClient(this IServiceCollection services, ApiClientOptions clientOptions)
     {
         services.AddSingleton<IBrowser, MauiAuthBroswer>();
         services.AddSingleton<ISecureStorageProvider, MauiStorageProvider>();
 
         services.AddSingleton(clientOptions);
 
-        services.AddSingleton<AuthHandler>();
-
-        services.AddHttpClient(AuthService.AuthenticatedClient)
-            .AddHttpMessageHandler((s) => s.GetService<AuthHandler>());
-
-        services.AddSingleton<IAuthService, AuthService>();
-        services.AddSingleton<IWeatherService, WeatherService>();
-        services.AddSingleton<ITodoListsService, TodoListsService>();
-        services.AddSingleton<ITodoItemsService, TodoItemsService>();
+        services.RegisterApiClientServices();
 
         return services;
     }

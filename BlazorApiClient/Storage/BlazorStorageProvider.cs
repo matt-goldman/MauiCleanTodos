@@ -1,4 +1,7 @@
-﻿namespace MauiCleanTodos.ApiClient.Storage;
+﻿using MauiCleanTodos.ApiClient.Storage;
+
+namespace BlazorApiClient.Storage;
+
 public class BlazorStorageProvider : ISecureStorageProvider
 {
     public Task<string> GetAsync(string name)
