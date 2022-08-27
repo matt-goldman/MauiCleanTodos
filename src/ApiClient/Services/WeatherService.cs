@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace MauiCleanTodos.ApiClient.Services;
+﻿namespace MauiCleanTodos.ApiClient.Services;
 
 public interface IWeatherService
 {
