@@ -95,6 +95,9 @@
 	  <MauiXaml Update="Pages\TodoItemPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="PopupPages\AddTodoPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="PopupPages\ConfirmPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

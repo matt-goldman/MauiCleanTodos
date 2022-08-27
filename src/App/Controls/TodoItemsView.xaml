@@ -9,60 +9,68 @@
     <Border BackgroundColor="{StaticResource BottomSheetBackground}"
             StrokeThickness="0"
             StrokeShape="RoundRectangle 30,30,0,0">
-        <VerticalStackLayout Padding="0,20"
-                             Spacing="30">
-            <Button WidthRequest="130"
-                    HeightRequest="40"
-                    CornerRadius="20"
-                    Text="+ Add Todo item"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    TextColor="{StaticResource OffWhite}"
-                    BackgroundColor="{StaticResource Primary}"
-                    FontSize="16">
-                <Button.Shadow>
-                    <Shadow Brush="Black"
-                            Offset="10,10"
-                            Radius="10"
-                            Opacity="0.5" />
-                </Button.Shadow>
-            </Button>
+        <Grid>
+            <VerticalStackLayout Padding="0,20"
+                                 Spacing="30">
+                <Button WidthRequest="130"
+                        HeightRequest="40"
+                        CornerRadius="20"
+                        Text="+ Add Todo item"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource OffWhite}"
+                        BackgroundColor="{StaticResource Primary}"
+                        FontSize="16"
+                        Command="{Binding AddItemCommand}">
+                    <Button.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="10,10"
+                                Radius="10"
+                                Opacity="0.5" />
+                    </Button.Shadow>
+                </Button>
 
-            <CollectionView x:Name="TodoItemsCollection"
-                            HeightRequest="700"
-                            ItemsSource="{Binding TodoItems}">
-                <CollectionView.Resources>
-                    <ResourceDictionary>
-                        <converters:BoolToTextDecorationsConverter x:Key="DoneToDecorations"/>
-                    </ResourceDictionary>
-                </CollectionView.Resources>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="30, *"
-                              WidthRequest="300"
-                              Margin="0,20">
-                            <CheckBox Grid.Column="0"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Start"
-                                      IsChecked="{Binding Done}"
-                                      x:Name="TodoCheck">
-                                <CheckBox.Behaviors>
-                                    <toolkit:EventToCommandBehavior EventName="CheckedChanged"
-                                                                    Command="{Binding Source={x:Reference TodosView}, Path=BindingContext.ItemCheckedCommand}"
-                                                                    CommandParameter="{Binding .}"/>
-                                </CheckBox.Behaviors>
-                            </CheckBox>
+                <CollectionView x:Name="TodoItemsCollection"
+                                HeightRequest="700"
+                                ItemsSource="{Binding TodoItems}">
+                    <CollectionView.Resources>
+                        <ResourceDictionary>
+                            <converters:BoolToTextDecorationsConverter x:Key="DoneToDecorations"/>
+                        </ResourceDictionary>
+                    </CollectionView.Resources>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="30, *"
+                                  WidthRequest="300"
+                                  Margin="0,20">
+                                <CheckBox Grid.Column="0"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Start"
+                                          IsChecked="{Binding Done}"
+                                          x:Name="TodoCheck">
+                                    <CheckBox.Behaviors>
+                                        <toolkit:EventToCommandBehavior EventName="CheckedChanged"
+                                                                        Command="{Binding Source={x:Reference TodosView}, Path=BindingContext.ItemCheckedCommand}"
+                                                                        CommandParameter="{Binding .}"/>
+                                    </CheckBox.Behaviors>
+                                </CheckBox>
 
-                            <Label Grid.Column="1"
-                                   FontSize="20"
-                                   TextColor="{StaticResource TodoItemColour}"
-                                   VerticalOptions="Start"
-                                   Text="{Binding Title}"
-                                   TextDecorations="{Binding Source={x:Reference TodoCheck}, Path=IsChecked, Converter={StaticResource DoneToDecorations}}"/>
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
+                                <Label Grid.Column="1"
+                                       FontSize="20"
+                                       TextColor="{StaticResource TodoItemColour}"
+                                       VerticalOptions="Start"
+                                       Text="{Binding Title}"
+                                       TextDecorations="{Binding Source={x:Reference TodoCheck}, Path=IsChecked, Converter={StaticResource DoneToDecorations}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+
+            <ActivityIndicator HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsRunning="True"
+                               x:Name="BusyIndicator"/>
+        </Grid>
     </Border>
 </ContentView>

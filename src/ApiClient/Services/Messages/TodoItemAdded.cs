@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace MauiCleanTodos.ApiClient.Services.Messages;
-public class TodoItemAdded
+public class TodoItemAdded : AsyncRequestMessage<TodoItemDto>
 {
+	public NewTodoItemDto Item { get; set; }
 
+	public TodoItemAdded(NewTodoItemDto item)
+	{
+		Item = item;
+	}
 }

@@ -36,6 +36,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		WeakReferenceMessenger.Default.Register<TodoItemUpdated>(this, async (r, m) => await UpdateTodoItem(m.Value));
 
+		WeakReferenceMessenger.Default.Register<MainViewModel, TodoItemAdded>(this, (r, m) => m.Reply(r.AddNewTodoItem(m.Item)));
 	}
 
 	public void Receive(UserUpdatedMessage message)
@@ -43,10 +44,17 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 		UserName = message.Value;
 	}
 
-    private async Task UpdateTodoItem(TodoItemDto item)
+    private Task UpdateTodoItem(TodoItemDto item)
     {
-		await _todoItemsService.UpdateTodoItem(item);
+		return _todoItemsService.UpdateTodoItem(item);
     }
+
+	private async Task<TodoItemDto> AddNewTodoItem(NewTodoItemDto item)
+	{
+		var newItem = await _todoItemsService.CreateTodoItem(item);
+		await RefreshLists();
+		return newItem;
+	}
 
     [RelayCommand]
 	private async Task Login()
@@ -105,9 +113,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	{
 		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
 
-		var itemsView = new TodoItemsView(selectedList.Items.ToList());
-
-		//itemsView.BackgroundColor = Colors.Transparent;
+		var itemsView = new TodoItemsView(selectedList);
 
         Parent.ShowBottomSheet(itemsView, true);
 	}

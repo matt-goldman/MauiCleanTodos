@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+           xmlns:controls="clr-namespace:MauiCleanTodos.App.Controls"
+           Color="Transparent"
+           Size="300,300"
+           x:Class="MauiCleanTodos.App.PopupPages.AddTodoPopup">
+    <Border StrokeThickness="0"
+            BackgroundColor="{StaticResource Gray300}"
+            StrokeShape="RoundRectangle 30">
+        <Border.Shadow>
+            <Shadow Brush="Black"
+                    Offset="10,10"
+                    Radius="10"
+                    Opacity="0.5" />
+        </Border.Shadow>
+        <VerticalStackLayout Spacing="30"
+                             Padding="0,30,0,0">
+            <VerticalStackLayout HeightRequest="50">
+                <Label HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="20"
+                       TextColor="Black"
+                       Text="New Todo Item"
+                       Grid.Row="0"/>
+
+                <Label Text="Title cannot be blank"
+                       FontSize="10"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       VerticalOptions="Center"
+                       Margin="8"
+                       Padding="0"
+                       x:Name="ValidationMessage"
+                       IsVisible="false"
+                       TextColor="Red"
+                       Grid.Row="1" />
+            </VerticalStackLayout>
+
+            <controls:MctEntry Placeholder="Item title"
+                               x:Name="TitleEntry" />
+
+            <Button WidthRequest="175"
+                    HeightRequest="60"
+                    CornerRadius="30"
+                    Text="OK"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    TextColor="White"
+                    Command="{Binding OkCommand}"
+                    Background="{StaticResource Tertiary}" >
+                <Button.Shadow>
+                    <Shadow Brush="Black"
+                            Offset="5,5"
+                            Radius="5"
+                            Opacity="0.5" />
+                </Button.Shadow>
+            </Button>
+
+        </VerticalStackLayout>
+    </Border>
+</mct:Popup>
