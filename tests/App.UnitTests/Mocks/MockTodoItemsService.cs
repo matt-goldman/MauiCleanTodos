@@ -31,8 +31,11 @@ public class MockTodoItemsService : ITodoItemsService
 
     public Task UpdateTodoItem(TodoItemDto todo)
     {
-        // TodoItem will already be passed by reference
-        // No need to update anything
+        var list = _api.TodoLists.FirstOrDefault(l => l.Id == todo.ListId);
+
+        var item = list.Items.FirstOrDefault(i => i.Id == todo.Id);
+
+        item = todo;
 
         return Task.CompletedTask;
     }

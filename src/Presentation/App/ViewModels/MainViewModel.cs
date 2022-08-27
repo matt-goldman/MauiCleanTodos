@@ -49,7 +49,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 		return _todoItemsService.UpdateTodoItem(item);
     }
 
-	private async Task<TodoItemDto> AddNewTodoItem(NewTodoItemDto item)
+	public async Task<TodoItemDto> AddNewTodoItem(NewTodoItemDto item)
 	{
 		var newItem = await _todoItemsService.CreateTodoItem(item);
 		await RefreshLists();

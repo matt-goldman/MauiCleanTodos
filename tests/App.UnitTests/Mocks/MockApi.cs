@@ -14,10 +14,10 @@ public class MockApi
             Id = 1,
             Items =
                 {
-                    new TodoItemDto { Title = "Make a todo list 📃", Id = 1 },
-                    new TodoItemDto { Title = "Check off the first item ✅", Id = 2 },
-                    new TodoItemDto { Title = "Realise you've already done two things on the list! 🤯", Id = 3},
-                    new TodoItemDto { Title = "Reward yourself with a nice, long nap 🏆", Id = 4 },
+                    new TodoItemDto { Title = "Make a todo list 📃", Id = 1, ListId = 1 },
+                    new TodoItemDto { Title = "Check off the first item ✅", Id = 2, ListId = 1 },
+                    new TodoItemDto { Title = "Realise you've already done two things on the list! 🤯", Id = 3, ListId = 1 },
+                    new TodoItemDto { Title = "Reward yourself with a nice, long nap 🏆", Id = 4, ListId = 1 },
                 }
         });
     }

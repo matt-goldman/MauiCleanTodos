@@ -3,6 +3,7 @@ using FluentAssertions;
 using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services;
 using MauiCleanTodos.App.ViewModels;
+using MauiCleanTodos.Shared.TodoItems;
 
 namespace App.UnitTests.ViewModels;
 
@@ -33,7 +34,7 @@ public class MainViewModelTests
     [Test]
     public void UpdateTodoItem_Should_Succeed_When_Valid()
     {
-        //arrange
+        // arrange
         var items = _todoListsService.GetTodos().Result
             .Select(l => l.Items)
             .FirstOrDefault();
@@ -45,23 +46,33 @@ public class MainViewModelTests
 
         _viewModel.UpdateTodoItem(item);
 
-        // assert
         _ = _viewModel.RefreshLists();
 
         var itemList = _viewModel.TodoLists.FirstOrDefault(l => l.Id == item.Id);
         var itemToTest = itemList.Items.FirstOrDefault(i => i.Id == item.Id);
 
+        // assert
         itemToTest.Done.Should().Be(true);
     }
 
     [Test]
     public void UpdateTodoItem_Should_Not_Succeed_When_Not_Valid()
     {
-        // arrange
+        //arrange
+        var items = _todoListsService.GetTodos().Result
+            .Select(l => l.Items)
+            .FirstOrDefault();
 
-        //act
+        var item = items.FirstOrDefault();
 
-        // asert
+        // act
+        item.Done = true;
+        item.ListId++;
+
+        Action act = () => _viewModel.UpdateTodoItem(item);
+
+        // assert
+        act.Should().Throw<NullReferenceException>();
     }
 
     
@@ -69,30 +80,42 @@ public class MainViewModelTests
     public void AddNewTodoItem_Should_Succeed_For_Valid_List()
     {
         // arrange
+        var newItemTitle = "Successful new item";
 
-        //act
+        var item = new NewTodoItemDto
+        {
+            ListId  = 1,
+            Title   = newItemTitle
+        };
+
+        // act
+        _ = _viewModel.AddNewTodoItem(item);
+        _ = _viewModel.RefreshLists();
+
+        var list = _viewModel.TodoLists.FirstOrDefault();
+        var newItems = list.Items.Where(i => i.Title == newItemTitle);
 
         // asert
+        newItems.Count().Should().Be(1);
     }
 
     [Test]
     public void AddNewTodoItem_Should_Not_Succeed_For_InValid_List()
     {
         // arrange
+        var newItemTitle = "Unsuccessful new item";
 
-        //act
+        var item = new NewTodoItemDto
+        {
+            ListId = 2,
+            Title = newItemTitle
+        };
 
-        // asert
-    }
+        // act
+        Func<Task> act = async () => { await _viewModel.AddNewTodoItem(item); };
 
-    [Test]
-    public void RefreshLists_Should_Include_All_Lists_In_Service()
-    {
-        // arrange
-
-        //act
-
-        // asert
+        // assert
+        act.Should().ThrowAsync<NullReferenceException>();
     }
 
 }
