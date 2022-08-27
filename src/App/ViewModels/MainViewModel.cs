@@ -1,14 +1,13 @@
 ﻿using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Maui.Views;
-using MauiCleanTodos.ApiClient.Authentication;
-using MauiCleanTodos.App.PopupPages;
-using MauiCleanTodos.Shared.TodoLists;
 using BottomSheet;
-using MauiCleanTodos.App.Controls;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
+using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services.Messages;
+using MauiCleanTodos.App.Controls;
+using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoItems;
-using Maui.Plugins.PageResolver;
+using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
 public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessage>
