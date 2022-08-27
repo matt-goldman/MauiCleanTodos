@@ -1,5 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+#if NET6_0
+#else
 using BottomSheet;
+#endif
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiCleanTodos.ApiClient.Authentication;
@@ -41,7 +44,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 		UserName = message.Value;
 	}
 
-    private Task UpdateTodoItem(TodoItemDto item)
+    public Task UpdateTodoItem(TodoItemDto item)
     {
 		return _todoItemsService.UpdateTodoItem(item);
     }
@@ -112,10 +115,13 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		var itemsView = new TodoItemsView(selectedList);
 
-        App.Current.MainPage.ShowBottomSheet(itemsView, true);
+#if NET6_0
+#else
+		App.Current.MainPage.ShowBottomSheet(itemsView, true);
+#endif
 	}
 
-	private async Task RefreshLists()
+	public async Task RefreshLists()
 	{
 		TodoLists.Clear();
 		var lists = await _todoListsService.GetTodos();
