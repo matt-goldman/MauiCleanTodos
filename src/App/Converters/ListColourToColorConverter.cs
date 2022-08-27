@@ -7,7 +7,7 @@ public class ListColourToColorConverter : IValueConverter
     {
         var colour = value as string;
 
-        return Color.FromHex(colour);
+        return Color.FromArgb(colour);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

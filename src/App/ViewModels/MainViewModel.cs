@@ -25,8 +25,6 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 	public ObservableCollection<TodoListDto> TodoLists { get; set; } = new();
 
-	public Page Parent { get; set; }
-
 	public MainViewModel(ITodoListsService todoListsService, ITodoItemsService todoItemsService, IAuthService authService)
 	{
 		_todoListsService = todoListsService;
@@ -76,7 +74,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		var newListPopup = new NewListPopup();
 
-		var result = await Parent.ShowPopupAsync(newListPopup);
+		var result = await App.Current.MainPage.ShowPopupAsync(newListPopup);
 
 		if (result is not null)
 		{
@@ -94,7 +92,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	private async Task Delete(int id)
 	{
 		var confirmPopup = new ConfirmPopup("Delete list", true);
-		var result = await Parent.ShowPopupAsync(confirmPopup);
+		var result = await App.Current.MainPage.ShowPopupAsync(confirmPopup);
 
 		bool sure = (bool?)result ?? false;
 
@@ -115,7 +113,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		var itemsView = new TodoItemsView(selectedList);
 
-        Parent.ShowBottomSheet(itemsView, true);
+        App.Current.MainPage.ShowBottomSheet(itemsView, true);
 	}
 
 	private async Task RefreshLists()

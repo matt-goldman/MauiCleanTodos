@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace MauiCleanTodos.App;
+﻿namespace MauiCleanTodos.App;
 
 public partial class MainPage : ContentPage
 {
@@ -12,7 +10,6 @@ public partial class MainPage : ContentPage
 		_viewModel = viewModel;
 		_viewModel.Navigation = Navigation;
 		BindingContext = _viewModel;
-		_viewModel.Parent = this;
 	}
 }
 
