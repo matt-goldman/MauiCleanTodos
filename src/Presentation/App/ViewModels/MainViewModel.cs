@@ -1,8 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-#if NET6_0
-#else
-using BottomSheet;
-#endif
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using MauiCleanTodos.ApiClient.Authentication;
@@ -18,8 +14,8 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	private readonly ITodoListsService _todoListsService;
 	private readonly ITodoItemsService _todoItemsService;
 	private readonly IAuthService _authService;
-
-	[ObservableProperty]
+    private readonly IBottomSheet _bottomSheet;
+    [ObservableProperty]
 	bool loggedIn;
 
 	[ObservableProperty]
@@ -27,12 +23,17 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 	public ObservableCollection<TodoListDto> TodoLists { get; set; } = new();
 
-	public MainViewModel(ITodoListsService todoListsService, ITodoItemsService todoItemsService, IAuthService authService)
+	public MainViewModel(
+		ITodoListsService todoListsService,
+		ITodoItemsService todoItemsService,
+		IAuthService authService,
+		IBottomSheet bottomSheet)
 	{
 		_todoListsService = todoListsService;
 		_todoItemsService = todoItemsService;
 		_authService = authService;
-		WeakReferenceMessenger.Default.Register(this);
+        _bottomSheet = bottomSheet;
+        WeakReferenceMessenger.Default.Register(this);
 
 		WeakReferenceMessenger.Default.Register<TodoItemUpdated>(this, async (r, m) => await UpdateTodoItem(m.Value));
 
@@ -115,10 +116,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 
 		var itemsView = new TodoItemsView(selectedList);
 
-#if NET6_0
-#else
-		App.Current.MainPage.ShowBottomSheet(itemsView, true);
-#endif
+		_bottomSheet.ShowBottomSheet(itemsView);
 	}
 
 	public async Task RefreshLists()

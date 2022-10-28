@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using MauiCleanTodos.ApiClient;
+using MauiCleanTodos.App.Controls;
 
 namespace MauiCleanTodos.App;
 
@@ -30,6 +31,8 @@ public static partial class MauiProgram
         };
 
 		builder.Services.RegisterMauiClient(options);
+
+		builder.Services.AddSingleton<IBottomSheet, BottomSheetControl>();
 
 		UseAutoreg(builder.Services);
 
