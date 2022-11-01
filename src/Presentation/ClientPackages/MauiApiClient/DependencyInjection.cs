@@ -12,13 +12,17 @@ public static class DependencyInjection
     /// <param name="clientOptions">IdentityServer config and API base URI</param>
     /// <param name="browserType">.NET MAUI or Blazor</param>
     /// <returns></returns>
-    public static IServiceCollection RegisterMauiClient(this IServiceCollection services, ApiClientOptions clientOptions)
+    public static IServiceCollection RegisterMauiClient(this IServiceCollection services, Action<ApiClientOptions> clientOptions)
     {
         services.AddSingleton<IBrowser, MauiAuthBroswer>();
         services.AddSingleton<ISecureStorageProvider, MauiStorageProvider>();
+        
+        ApiClientOptions options = new();
 
-        services.AddSingleton(clientOptions);
-
+        clientOptions.Invoke(options);
+        
+        services.AddSingleton(options);
+        
         services.RegisterApiClientServices();
 
         return services;

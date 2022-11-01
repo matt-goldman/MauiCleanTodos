@@ -21,16 +21,14 @@ public static partial class MauiProgram
 			})
 			.UseMauiCommunityToolkit();
 
-        var options = new ApiClientOptions
+		builder.Services.RegisterMauiClient(opt =>
 		{
-			Authority	= "https://rwds.goforgoldman.com",
-			BaseUrl		= "https://rwds.goforgoldman.com",
-			ClientId	= "mctmobileapp",
-			RedirectUri	= "auth.com.goldie.mauicleantodos.app://callback",
-			Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access"
-        };
-
-		builder.Services.RegisterMauiClient(options);
+            opt.Authority	= "https://rwds.goforgoldman.com";
+            opt.BaseUrl		= "https://rwds.goforgoldman.com";
+            opt.ClientId	= "mctmobileapp";
+            opt.RedirectUri = "auth.com.goldie.mauicleantodos.app://callback";
+            opt.Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access";
+        });
 
 		builder.Services.AddSingleton<IBottomSheet, BottomSheetControl>();
 

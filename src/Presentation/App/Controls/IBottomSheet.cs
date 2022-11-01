@@ -7,13 +7,15 @@ namespace MauiCleanTodos.App.Controls;
 
 public interface IBottomSheet
 {
-    void ShowBottomSheet(View view, bool animated = true);
+    void ShowBottomSheet(object view, bool animated = true);
 }
 
 public class BottomSheetControl : IBottomSheet
 {
-    public void ShowBottomSheet(View view, bool animated = true)
+    public void ShowBottomSheet(object view, bool animated = true)
     {
+        if (view is not View)
+            return;
 #if NET6_0
 #else
         App.Current.MainPage.ShowBottomSheet(view, animated);

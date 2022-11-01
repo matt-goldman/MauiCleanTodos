@@ -2,6 +2,7 @@
 using FluentAssertions;
 using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services;
+using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.ViewModels;
 using MauiCleanTodos.Shared.TodoItems;
 
@@ -12,6 +13,7 @@ public class MainViewModelTests
     private ITodoItemsService _todoItemsService;
     private ITodoListsService _todoListsService;
     private IAuthService _authService;
+    private IBottomSheet _bottomSheet;
 
     private MainViewModel _viewModel;
 
@@ -27,8 +29,9 @@ public class MainViewModelTests
         _todoItemsService = new MockTodoItemsService(_api);
         _todoListsService = new MockTodoListsService(_api);
         _authService = new MockAuthService();
+        _bottomSheet = new MockBottomSheet();
 
-        _viewModel = new MainViewModel(_todoListsService, _todoItemsService, _authService);
+        _viewModel = new MainViewModel(_todoListsService, _todoItemsService, _authService, _bottomSheet);
     }
 
     [Test]
