@@ -1,11 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using CommunityToolkit.Mvvm.Messaging;
 using IdentityModel.OidcClient;
-using MauiCleanTodos.ApiClient.Storage;
+using MauiCleanTodos.ApiClient;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
-namespace MauiCleanTodos.ApiClient.Authentication;
-
+namespace MauiCleanTodos.App.Authentication;
 public interface IAuthService
 {
     Task<bool> LoginAsync();
@@ -19,16 +17,16 @@ public class AuthService : IAuthService
 {
     public const string AuthenticatedClient = "AuthenticatedClient";
 
+    public const string USER_UPDATED_MESSAGE = nameof(USER_UPDATED_MESSAGE);
+
     public static string RedirectUri { get; set; } = string.Empty;
 
     private readonly OidcClientOptions _options;
     private readonly IBrowser _browser;
-    private readonly ISecureStorageProvider _secureStorageProvider;
 
     public AuthService(
         ApiClientOptions options,
-        IBrowser browser,
-        ISecureStorageProvider secureStorageProvider)
+        IBrowser browser)
     {
         _options = new OidcClientOptions
         {
@@ -39,7 +37,6 @@ public class AuthService : IAuthService
             Browser = browser
         };
         _browser = browser;
-        _secureStorageProvider = secureStorageProvider;
         RedirectUri = options.RedirectUri;
     }
 
@@ -94,7 +91,7 @@ public class AuthService : IAuthService
     {
         var oidcClient = new OidcClient(_options);
 
-        RefreshToken = await _secureStorageProvider.GetAsync(nameof(RefreshToken));
+        RefreshToken = await SecureStorage.GetAsync(nameof(RefreshToken));
 
         if (string.IsNullOrEmpty(RefreshToken))
             return false;
@@ -122,20 +119,20 @@ public class AuthService : IAuthService
 
         if (userName is not null)
         {
-            WeakReferenceMessenger.Default.Send(new UserUpdatedMessage(userName));
+            MessagingCenter.Send(this, USER_UPDATED_MESSAGE, userName);
         }
     }
 
     private async Task SetRefreshToken(string token)
     {
         RefreshToken = token;
-        await _secureStorageProvider.SaveAsync(nameof(RefreshToken), token);
+        await SecureStorage.SetAsync(nameof(RefreshToken), token);
     }
 
     private void ClearTokens()
     {
         RefreshToken = String.Empty;
-        _secureStorageProvider.Remove(nameof(RefreshToken));
+        SecureStorage.Remove(nameof(RefreshToken));
     }
 
     private JwtSecurityToken? ParseToken(string inTtoken)

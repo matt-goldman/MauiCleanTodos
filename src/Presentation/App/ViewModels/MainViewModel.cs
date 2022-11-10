@@ -1,20 +1,21 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
-using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services.Messages;
+using MauiCleanTodos.App.Authentication;
 using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoItems;
 using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
-public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessage>
+public partial class MainViewModel : BaseViewModel
 {
 	private readonly ITodoListsService _todoListsService;
 	private readonly ITodoItemsService _todoItemsService;
 	private readonly IAuthService _authService;
     private readonly IBottomSheet _bottomSheet;
+    
     [ObservableProperty]
 	bool loggedIn;
 
@@ -33,16 +34,12 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 		_todoItemsService = todoItemsService;
 		_authService = authService;
         _bottomSheet = bottomSheet;
-        WeakReferenceMessenger.Default.Register(this);
 
-		WeakReferenceMessenger.Default.Register<TodoItemUpdated>(this, async (r, m) => await UpdateTodoItem(m.Value));
+        MessagingCenter.Subscribe<AuthService, string>(this, AuthService.USER_UPDATED_MESSAGE, (sender, arg) => UserName = arg);
+        
+		MessagingCenter.Subscribe<TodoItemsView, TodoItemDto>(this, TodoItemsView.TODO_ITEM_UPDATED_MESSAGE, (sender, arg) => UpdateTodoItem(arg));
 
-		WeakReferenceMessenger.Default.Register<MainViewModel, TodoItemAdded>(this, (r, m) => m.Reply(r.AddNewTodoItem(m.Item)));
-	}
-
-	public void Receive(UserUpdatedMessage message)
-	{
-		UserName = message.Value;
+        WeakReferenceMessenger.Default.Register<MainViewModel, TodoItemAdded>(this, (r, m) => m.Reply(r.AddNewTodoItem(m.Item)));
 	}
 
     public Task UpdateTodoItem(TodoItemDto item)

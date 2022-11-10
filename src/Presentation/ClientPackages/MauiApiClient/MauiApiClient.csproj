@@ -19,7 +19,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ApiClientBase\ApiClientBase.csproj" />
+	  <ProjectReference Include="..\ApiClientBase\MauiCleanTodos.ApiClient.csproj" />
 	</ItemGroup>
 
 </Project>

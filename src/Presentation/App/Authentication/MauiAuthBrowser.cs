@@ -1,8 +1,9 @@
 ﻿using IdentityModel.OidcClient.Browser;
+using MauiCleanTodos.ApiClient.Authentication;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
-namespace MauiCleanTodos.ApiClient.Authentication;
-public class MauiAuthBroswer : IBrowser
+namespace MauiCleanTodos.App.Authentication;
+public class MauiAuthBrowser : IBrowser
 {
     public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = default)
     {

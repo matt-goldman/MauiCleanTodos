@@ -12,7 +12,11 @@ public partial class TodoItemsView : ContentView
 {
 	private readonly int _listId;
 
-	public ObservableCollection<TodoItemDto> TodoItems { get; set; } = new();
+    public const string TODO_ITEM_UPDATED_MESSAGE = nameof(TODO_ITEM_UPDATED_MESSAGE);
+
+    public const string TODO_ITEM_ADDED_MESSAGE = nameof(TODO_ITEM_ADDED_MESSAGE);
+
+    public ObservableCollection<TodoItemDto> TodoItems { get; set; } = new();
 
 	public TodoItemsView(TodoListDto list)
 	{
@@ -41,7 +45,7 @@ public partial class TodoItemsView : ContentView
 	{
 		if (item is not null)
 		{
-            WeakReferenceMessenger.Default.Send(new TodoItemUpdated(item));
+            MessagingCenter.Send(this, TODO_ITEM_UPDATED_MESSAGE, item);
         }
 	}
 
