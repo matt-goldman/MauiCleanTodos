@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using MauiCleanTodos.ApiClient;
 using MauiCleanTodos.App.Controls;
+using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
+using MauiCleanTodos.App.Authentication;
 
 namespace MauiCleanTodos.App;
 
@@ -31,7 +33,8 @@ public static partial class MauiProgram
             opt.Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access";
         });
 
-		builder.Services.AddSingleton<IBottomSheet, BottomSheetControl>();
+        builder.Services.AddSingleton<IBrowser, MauiAuthBrowser>();
+        builder.Services.AddSingleton<IBottomSheet, BottomSheetControl>();
 
 		return builder.Build();
 	}
