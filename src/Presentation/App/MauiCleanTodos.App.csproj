@@ -65,11 +65,12 @@
 	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
 	  <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="1.0.7" />
 	  <PackageReference Include="Goldie.MauiPlugins.PageResolver.Autoreg" Version="1.0.5" />
+	  <PackageReference Include="IdentityModel.OidcClient" Version="5.1.0" />
 	  <PackageReference Include="M.BindableProperty.Generator" Version="0.8.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ClientPackages\MauiApiClient\MauiApiClient.csproj" />
+	  <ProjectReference Include="..\ClientPackages\ApiClientBase\MauiCleanTodos.ApiClient.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

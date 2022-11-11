@@ -1,11 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
-using MauiCleanTodos.ApiClient.Services.Messages;
 using MauiCleanTodos.App.Authentication;
 using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.PopupPages;
-using MauiCleanTodos.Shared.TodoItems;
 using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
@@ -36,22 +33,6 @@ public partial class MainViewModel : BaseViewModel
         _bottomSheet = bottomSheet;
 
         MessagingCenter.Subscribe<AuthService, string>(this, AuthService.USER_UPDATED_MESSAGE, (sender, arg) => UserName = arg);
-        
-		MessagingCenter.Subscribe<TodoItemsView, TodoItemDto>(this, TodoItemsView.TODO_ITEM_UPDATED_MESSAGE, (sender, arg) => UpdateTodoItem(arg));
-
-        WeakReferenceMessenger.Default.Register<MainViewModel, TodoItemAdded>(this, (r, m) => m.Reply(r.AddNewTodoItem(m.Item)));
-	}
-
-    public Task UpdateTodoItem(TodoItemDto item)
-    {
-		return _todoItemsService.UpdateTodoItem(item);
-    }
-
-	public async Task<TodoItemDto> AddNewTodoItem(NewTodoItemDto item)
-	{
-		var newItem = await _todoItemsService.CreateTodoItem(item);
-		await RefreshLists();
-		return newItem;
 	}
 
     [RelayCommand]
@@ -111,7 +92,7 @@ public partial class MainViewModel : BaseViewModel
 	{
 		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
 
-		var itemsView = new TodoItemsView(selectedList);
+		var itemsView = new TodoItemsView(selectedList, _todoItemsService);
 
 		_bottomSheet.ShowBottomSheet(itemsView);
 	}

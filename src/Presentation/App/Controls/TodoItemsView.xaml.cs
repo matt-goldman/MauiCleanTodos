@@ -1,7 +1,5 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
-using MauiCleanTodos.ApiClient.Services.Messages;
 using MauiCleanTodos.App.PopupPages;
 using MauiCleanTodos.Shared.TodoItems;
 using MauiCleanTodos.Shared.TodoLists;
@@ -11,14 +9,12 @@ namespace MauiCleanTodos.App.Controls;
 public partial class TodoItemsView : ContentView
 {
 	private readonly int _listId;
-
-    public const string TODO_ITEM_UPDATED_MESSAGE = nameof(TODO_ITEM_UPDATED_MESSAGE);
-
-    public const string TODO_ITEM_ADDED_MESSAGE = nameof(TODO_ITEM_ADDED_MESSAGE);
+	
+	private readonly ITodoItemsService _todoItemsService;
 
     public ObservableCollection<TodoItemDto> TodoItems { get; set; } = new();
 
-	public TodoItemsView(TodoListDto list)
+	public TodoItemsView(TodoListDto list, ITodoItemsService todoItemsService)
 	{
 		InitializeComponent();
 		BindingContext = this;
@@ -31,6 +27,7 @@ public partial class TodoItemsView : ContentView
 		_listId = list.Id;
 
 		BusyIndicator.IsVisible = false;
+		_todoItemsService = todoItemsService;
 	}
 
 	protected override void OnSizeAllocated(double width, double height)
@@ -41,11 +38,11 @@ public partial class TodoItemsView : ContentView
 	}
 
 	[RelayCommand]
-	private void ItemChecked(TodoItemDto item)
+	private async Task ItemChecked(TodoItemDto item)
 	{
 		if (item is not null)
 		{
-            MessagingCenter.Send(this, TODO_ITEM_UPDATED_MESSAGE, item);
+			await _todoItemsService.UpdateTodoItem(item);
         }
 	}
 
@@ -66,7 +63,7 @@ public partial class TodoItemsView : ContentView
 				Title = (string)newTitle
 			};
 
-			var newDto = await WeakReferenceMessenger.Default.Send(new TodoItemAdded(newItem));
+			var newDto = await _todoItemsService.CreateTodoItem(newItem);
 
 			if (newDto is not null)
 			{

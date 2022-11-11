@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using IdentityModel.OidcClient;
 using MauiCleanTodos.ApiClient;
+using MauiCleanTodos.ApiClient.Authentication;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.App.Authentication;
@@ -15,14 +16,11 @@ public interface IAuthService
 
 public class AuthService : IAuthService
 {
-    public const string AuthenticatedClient = "AuthenticatedClient";
-
     public const string USER_UPDATED_MESSAGE = nameof(USER_UPDATED_MESSAGE);
 
     public static string RedirectUri { get; set; } = string.Empty;
 
     private readonly OidcClientOptions _options;
-    private readonly IBrowser _browser;
 
     public AuthService(
         ApiClientOptions options,
@@ -36,15 +34,10 @@ public class AuthService : IAuthService
             RedirectUri = options.RedirectUri,
             Browser = browser
         };
-        _browser = browser;
         RedirectUri = options.RedirectUri;
     }
 
-    internal static string AccessToken { get; set; } = String.Empty;
-
     internal static string RefreshToken { get; set; } = String.Empty;
-
-    internal static string GetToken() => AccessToken;
 
     public async Task<bool> LoginAsync()
     {
@@ -77,7 +70,7 @@ public class AuthService : IAuthService
         try
         {
             ClearTokens();
-            AccessToken = String.Empty;
+            AuthHandler.SetAccessToken(String.Empty);
             return true;
         }
         catch (Exception ex)
@@ -111,7 +104,7 @@ public class AuthService : IAuthService
 
     private void SetLoggedInState(string token, string idToken)
     {
-        AccessToken = token;
+        AuthHandler.SetAccessToken(token);
 
         var claims = ParseToken(idToken);
 

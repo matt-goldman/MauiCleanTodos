@@ -1,5 +1,4 @@
 ﻿using IdentityModel.OidcClient.Browser;
-using MauiCleanTodos.ApiClient.Authentication;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.App.Authentication;
