@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Views;
 using MauiCleanTodos.App.Authentication;
 using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.PopupPages;
+using MauiCleanTodos.Shared.TodoItems;
 using MauiCleanTodos.Shared.TodoLists;
 
 namespace MauiCleanTodos.App.ViewModels;
