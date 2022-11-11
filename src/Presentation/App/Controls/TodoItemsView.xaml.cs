@@ -12,7 +12,5 @@ public partial class TodoItemsView : ContentView
 	protected override void OnSizeAllocated(double width, double height)
 	{
 		base.OnSizeAllocated(width, height);
-
-		this.BackgroundColor = Colors.Transparent;
 	}
 }
