@@ -23,8 +23,8 @@ public static partial class MauiProgram
 
 		builder.Services.RegisterMauiClient(opt =>
 		{
-            opt.Authority	= "https://rwds.goforgoldman.com";
-            opt.BaseUrl		= "https://rwds.goforgoldman.com";
+            opt.Authority	= "https://6764-159-196-124-207.ngrok.io";
+            opt.BaseUrl		= "https://6764-159-196-124-207.ngrok.io";
             opt.ClientId	= "mctmobileapp";
             opt.RedirectUri = "auth.com.goldie.mauicleantodos.app://callback";
             opt.Scope		= "MauiCleanTodos.WebUIAPI openid profile offline_access";
