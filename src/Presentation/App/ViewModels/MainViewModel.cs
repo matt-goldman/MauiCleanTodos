@@ -37,7 +37,7 @@ public partial class MainViewModel : BaseViewModel
 		_authService = authService;
         _bottomSheet = bottomSheet;
 
-        MessagingCenter.Subscribe<AuthService, string>(this, AuthService.USER_UPDATED_MESSAGE, (sender, arg) => UserName = arg);
+        MessagingCenter.Subscribe<AuthService, string>(this, AuthService.UserUpdatedMessage, (sender, arg) => UserName = arg);
 	}
 
     [RelayCommand]

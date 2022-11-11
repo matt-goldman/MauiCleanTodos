@@ -16,7 +16,7 @@ public interface IAuthService
 
 public class AuthService : IAuthService
 {
-    public const string USER_UPDATED_MESSAGE = nameof(USER_UPDATED_MESSAGE);
+    public const string UserUpdatedMessage = nameof(UserUpdatedMessage);
 
     public static string RedirectUri { get; set; } = string.Empty;
 
@@ -112,7 +112,7 @@ public class AuthService : IAuthService
 
         if (userName is not null)
         {
-            MessagingCenter.Send(this, USER_UPDATED_MESSAGE, userName);
+            MessagingCenter.Send(this, UserUpdatedMessage, userName);
         }
     }
 
