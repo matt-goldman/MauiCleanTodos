@@ -70,6 +70,7 @@
             <ActivityIndicator HorizontalOptions="Center"
                                VerticalOptions="Center"
                                IsRunning="True"
+                               IsVisible="{Binding IsBusy}"
                                x:Name="BusyIndicator"/>
         </Grid>
     </Border>

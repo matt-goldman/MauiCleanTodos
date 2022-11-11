@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
+using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.App.Authentication;
 using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.PopupPages;
@@ -20,6 +22,10 @@ public partial class MainViewModel : BaseViewModel
 	string userName;
 
 	public ObservableCollection<TodoListDto> TodoLists { get; set; } = new();
+
+	public ObservableCollection<TodoItemDto> TodoItems { get; set; } = new();
+
+	private int _listId;
 
 	public MainViewModel(
 		ITodoListsService todoListsService,
@@ -90,14 +96,62 @@ public partial class MainViewModel : BaseViewModel
 	[RelayCommand]
 	private void ShowList(int listId)
 	{
+		_listId = listId;
 		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
 
-		var itemsView = new TodoItemsView(selectedList, _todoItemsService);
+		TodoItems.Clear();
+
+		foreach (var item in selectedList.Items)
+		{
+			TodoItems.Add(item);
+		}
+
+		var itemsView = new TodoItemsView();
+
+		itemsView.BindingContext = this;
 
 		_bottomSheet.ShowBottomSheet(itemsView);
 	}
 
-	public async Task RefreshLists()
+    [RelayCommand]
+    private async Task ItemChecked(TodoItemDto item)
+    {
+		if (item is not null)
+		{
+			await _todoItemsService.UpdateTodoItem(item);
+
+			await RefreshLists();
+		}
+    }
+
+    [RelayCommand]
+    private async Task AddItem()
+    {
+        IsBusy = true;
+
+        var newItemPopup = new AddTodoPopup();
+
+        var newTitle = await App.Current.MainPage.ShowPopupAsync(newItemPopup);
+
+        if (newTitle is not null)
+        {
+            var newItem = new NewTodoItemDto
+            {
+                ListId = _listId,
+                Title = (string)newTitle
+            };
+
+			var newDto = await _todoItemsService.CreateTodoItem(newItem);
+
+            TodoItems.Add(newDto);
+
+			await RefreshLists();
+        }
+
+        IsBusy = false;
+    }
+
+    public async Task RefreshLists()
 	{
 		TodoLists.Clear();
 		var lists = await _todoListsService.GetTodos();
