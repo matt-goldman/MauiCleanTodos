@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Maui;
-using MauiCleanTodos.ApiClient;
 using MauiCleanTodos.App.Controls;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 using MauiCleanTodos.App.Authentication;
+using MauiCleanTodos.ApiClient;
 
 namespace MauiCleanTodos.App;
 
@@ -24,7 +24,7 @@ public static partial class MauiProgram
 			.UseMauiCommunityToolkit()
 			.UseAutodependencies();
 
-		builder.Services.RegisterMauiClient(opt =>
+		builder.Services.RegisterApiClientServices(opt =>
 		{
             opt.Authority	= "https://569a-163-53-144-8.ngrok-free.app";
             opt.BaseUrl		= "https://569a-163-53-144-8.ngrok-free.app";

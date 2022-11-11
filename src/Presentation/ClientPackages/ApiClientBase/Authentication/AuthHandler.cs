@@ -3,11 +3,15 @@
 namespace MauiCleanTodos.ApiClient.Authentication;
 public class AuthHandler : DelegatingHandler
 {
+    public const string AUTHENTICATED_CLIENT = nameof(AUTHENTICATED_CLIENT);
+
+    private static string _accessToken = string.Empty;
+
+    public static void SetAccessToken(string token) => _accessToken = token;
+
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var token = AuthService.GetToken();
-
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
         return await base.SendAsync(request, cancellationToken);
     }

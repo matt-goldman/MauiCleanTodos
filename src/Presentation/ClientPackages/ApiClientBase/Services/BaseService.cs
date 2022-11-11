@@ -10,7 +10,7 @@ public class BaseService
 
     public BaseService(IHttpClientFactory httpClientFactory, ApiClientOptions options)
     {
-        _httpClient = httpClientFactory.CreateClient(AuthService.AuthenticatedClient);
+        _httpClient = httpClientFactory.CreateClient(AuthHandler.AUTHENTICATED_CLIENT);
 
         _baseUrl = options.BaseUrl;
     }
