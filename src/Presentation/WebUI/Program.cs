@@ -44,6 +44,8 @@ app.UseSwaggerUi(settings =>
 
 app.UseRouting();
 
+app.UseCors();
+
 app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
@@ -54,7 +56,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
 
 app.Run();
 
