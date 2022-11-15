@@ -18,6 +18,16 @@ public static class ConfigureServices
 
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
+        services.AddCors(opt =>
+        {
+            opt.AddDefaultPolicy(policy =>
+            {
+                policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("https://localhost:7271");
+            });
+        });
+
         services.AddHttpContextAccessor();
 
         services.AddHealthChecks()
