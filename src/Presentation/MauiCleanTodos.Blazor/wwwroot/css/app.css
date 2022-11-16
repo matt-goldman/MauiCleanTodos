@@ -1,7 +1,16 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+:root {
+    --primary-background: #525151;
+    --list-background: #C2C2C2;
+    --dialog-background: #A3A3A3;
+    --primary-button: #528ABE;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: var(--primary-background);
+    overflow: hidden;
 }
 
 h1:focus {
@@ -9,7 +18,7 @@ h1:focus {
 }
 
 a, .btn-link {
-    color: #0071c1;
+    color: white;
 }
 
 .btn-primary {
