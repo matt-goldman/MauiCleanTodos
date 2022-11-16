@@ -13,7 +13,7 @@ main {
 }
 
 .top-row {
-    background-color: #f7f7f7;
+    background-color: #60000000;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
     height: 3.5rem;
@@ -35,6 +35,17 @@ main {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+.gradient-circle {
+    height: 550px;
+    width: 550px;
+    background-image: linear-gradient(45deg, #F6FA41, #A71DFC);
+    /*background-image: linear-gradient(45deg, #59F6FA41, #A71DFC);*/
+    border-radius: 50%;
+    position: absolute;
+    top: -150px;
+    right: -150px;
+}
 
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
