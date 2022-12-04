@@ -1,4 +1,4 @@
-#if NET6_0
+#if net7_0
 #else
 using BottomSheet;
 #endif
@@ -19,12 +19,12 @@ public class BottomSheetControl : IBottomSheet
         if (view is not View)
             return;
 
-        // TODO: this should be inside this condition, however a bug
+#if net7_0
+// TODO: this should be inside this condition, however a bug
         // requires this to be here at the moment.
         App.Current.MainPage.ShowBottomSheet(view as View, animated);
-#if NET6_0
 #else
-        App.Current.MainPage.ShowBottomSheet(view, animated);
+        App.Current.MainPage.ShowBottomSheet((IView)view, animated);
 #endif
     }
 }

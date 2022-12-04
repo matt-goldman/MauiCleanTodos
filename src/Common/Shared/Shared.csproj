@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	  <TargetFrameworks>net7.0;net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
 	  <RootNamespace>MauiCleanTodos.Shared</RootNamespace>
 	  <AssemblyName>MauiCleanTodos.Shared</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
