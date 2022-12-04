@@ -11,6 +11,7 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: var(--primary-background);
     overflow: hidden;
+    color: white;
 }
 
 h1:focus {

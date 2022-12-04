@@ -40,11 +40,24 @@ main {
     height: 550px;
     width: 550px;
     background-image: linear-gradient(45deg, #F6FA41, #A71DFC);
-    /*background-image: linear-gradient(45deg, #59F6FA41, #A71DFC);*/
     border-radius: 50%;
     position: absolute;
     top: -150px;
     right: -150px;
+}
+
+.bot-container {
+    width: 300px;
+    height: 300px;
+    /*background-image: url(/todo_bot.png);*/
+    position: absolute;
+    top: 50px;
+    right: 200px;
+}
+
+.bot-image {
+    width: 400px;
+    height: 400px;
 }
 
 @media (max-width: 640.98px) {
