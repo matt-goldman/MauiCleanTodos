@@ -1,0 +1,39 @@
+﻿@inject ITodoListsService todoListService
+@inject ITodoItemsService todoItemService
+
+@page "/todos"
+
+<h3>TodosPage</h3>
+
+@foreach(var list in todoLists)
+{
+    <div>@list.Title</div>
+}
+
+
+
+@code {
+    private List<TodoListDto> todoLists = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            try
+            {
+                var lists = await todoListService.GetTodos();
+                foreach (var list in lists)
+                {
+                    todoLists.Add(list);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+
+}

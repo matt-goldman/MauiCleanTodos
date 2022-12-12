@@ -8,10 +8,15 @@
         <IsPackable>true</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
-
+	
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.7" />
+	</ItemGroup>
+	
     <ItemGroup>
         <ProjectReference Include="..\..\Core\Application\Application.csproj" />
         <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
+        <ProjectReference Include="..\MauiCleanTodos.Blazor\MauiCleanTodos.Blazor.csproj" />
     </ItemGroup>
 
     <ItemGroup>

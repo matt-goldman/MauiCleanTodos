@@ -7,8 +7,18 @@
     --primary-button: #528ABE;
 }
 
+@font-face {
+    font-family: 'Sora';
+    src: url('../fonts/Sora-VariableFont_wght.ttf');
+}
+
+@font-face {
+    font-family: 'Viga';
+    src: url('../fonts/Viga-Regular.ttf');
+}
+
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Sora', Helvetica, Arial, sans-serif;
     background-color: var(--primary-background);
     overflow: hidden;
     color: white;
@@ -20,6 +30,10 @@ h1:focus {
 
 a, .btn-link {
     color: white;
+}
+
+.login-display {
+    font-family: Viga;
 }
 
 .btn-primary {
