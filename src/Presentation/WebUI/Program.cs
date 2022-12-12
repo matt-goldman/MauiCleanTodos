@@ -18,6 +18,8 @@ if (app.Environment.IsDevelopment())
     // Add to enable IdentityServer to work with tunneling software like PacketRiot or ngrok
     app.UseForwardedHeaders();
 
+    app.UseWebAssemblyDebugging();
+
     // Initialise and seed database
     using (var scope = app.Services.CreateScope())
     {
@@ -34,6 +36,8 @@ else
 
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
+
+app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseSwaggerUi(settings =>
