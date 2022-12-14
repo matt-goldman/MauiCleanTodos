@@ -1,9 +1,10 @@
 ﻿@page "/authentication/{action}"
 @inject IAccessTokenProvider tokenProvider
+@inject NavigationManager navigation
 
 @using MauiCleanTodos.ApiClient.Authentication;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="HandleLoginSucceeded" />
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="HandleLoginSucceeded" LogInFailed="LoginFailedFragment" />
 
 @code{
     [Parameter] public string? Action { get; set; }
@@ -12,13 +13,31 @@
     {
         var tokenResult = await tokenProvider.RequestAccessToken();
 
+        Console.WriteLine("[AuthenticaotrView] Got Token");
+
         if (tokenResult.TryGetToken(out var token))
         {
+            Console.WriteLine($"[AuthenticaotrView] Token: {token.Value}");
             AuthHandler.SetAccessToken(token.Value);
+
+            navigation.NavigateTo("/todos");
         }
         else
         {
             Console.WriteLine("No token");
         }
+    }
+
+    private RenderFragment LoginFailedFragment(string message)
+    {
+        Console.WriteLine(message);
+        return builder =>
+        {
+            builder.OpenElement(0, "div");
+            builder.AddAttribute(1, "class", "alert alert-danger");
+            builder.AddAttribute(2, "role", "alert");
+            builder.AddContent(3, $"There was an error trying to log you in: '{message}'");
+            builder.CloseElement();
+        };
     }
 }

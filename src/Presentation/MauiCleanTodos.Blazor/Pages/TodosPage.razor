@@ -2,18 +2,24 @@
 @inject ITodoItemsService todoItemService
 
 @page "/todos"
+@using System.Collections.ObjectModel;
 
 <h3>TodosPage</h3>
 
-@foreach(var list in todoLists)
+@if (hasTodos)
 {
-    <div>@list.Title</div>
+    @foreach (var list in todoLists)
+    {
+        <div>@list.Title</div>
+    }
 }
 
 
 
 @code {
-    private List<TodoListDto> todoLists = new();
+    private ObservableCollection<TodoListDto> todoLists = new();
+
+    private bool hasTodos = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -24,16 +30,24 @@
             try
             {
                 var lists = await todoListService.GetTodos();
-                foreach (var list in lists)
-                {
-                    todoLists.Add(list);
-                }
+                AddTodoLists(lists);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
+    }
+
+    private void AddTodoLists(List<TodoListDto> lists)
+    {
+        foreach (var list in lists)
+        {
+            todoLists.Add(list);
+        }
+
+        hasTodos = true;
+        StateHasChanged();
     }
 
 }

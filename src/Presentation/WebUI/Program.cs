@@ -54,13 +54,20 @@ app.UseAuthentication();
 app.UseIdentityServer();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+app.UseEndpoints(e=>
+{
+    e.MapControllers();
+    e.MapRazorPages();
+    e.MapFallbackToFile("index.html");
+});
 
-app.MapRazorPages();
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html");
+//app.MapRazorPages();
+
+//app.MapFallbackToFile("index.html");
 
 app.Run();
 
