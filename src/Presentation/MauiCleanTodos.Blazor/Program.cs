@@ -10,11 +10,11 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.RegisterApiClientServices(opt =>
 {
-    opt.Authority = "https://localhost:5001";
-    opt.BaseUrl = "https://localhost:5001";
-    opt.ClientId = "MauiCleanTodos.WebUI";
+    opt.Authority = builder.HostEnvironment.BaseAddress;
+    opt.BaseUrl = builder.HostEnvironment.BaseAddress;
+    //opt.ClientId = "MauiCleanTodos.WebUI";
     opt.RedirectUri = $"{builder.HostEnvironment.BaseAddress}authentication/login-callback";
-    opt.Scope = "MauiCleanTodos.WebUIAPI openid profile offline_access";
+    //opt.Scope = "MauiCleanTodos.WebUIAPI openid profile offline_access";
 });
 
 

@@ -7,10 +7,15 @@ public class AuthHandler : DelegatingHandler
 
     private static string _accessToken = string.Empty;
 
-    public static void SetAccessToken(string token) => _accessToken = token;
+    public static void SetAccessToken(string token)
+    {
+        Console.WriteLine($"[AuthHandler] Setting access token {token}");
+        _accessToken = token;
+    }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+        Console.WriteLine($"[AuthHandler] Sending authenticated request with token {_accessToken}");
         request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
 
         return await base.SendAsync(request, cancellationToken);
