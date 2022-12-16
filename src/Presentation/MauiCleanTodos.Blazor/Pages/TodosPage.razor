@@ -4,16 +4,39 @@
 @page "/todos"
 @using System.Collections.ObjectModel;
 
-<h3>TodosPage</h3>
+<div class="container">
+    <div class="row mx-auto h-100">
+        <div class="col">
+            <div class="todo-card">
+                <div class="todo-list-button-list">
+                    @if (hasTodos)
+                    {
+                         @foreach (var list in todoLists)
+                        {
+                            <button class="list-button mx-auto align-middle" style="background-color:@list.Colour">@list.Title</button>
+                        }
+                    }
+                </div>
+                <div class="add-button-container">
+                    <button class="add-button mx-auto align-middle">+ Add Todo List</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="todo-card">
+                <div class="todo-list-button-list">
 
-@if (hasTodos)
-{
-    @foreach (var list in todoLists)
-    {
-        <div>@list.Title</div>
-    }
-}
-
+                </div>
+                <div class="add-button-container">
+                    <button class="add-button mx-auto align-middle">+ Add Todo Item</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            
+        </div>
+    </div>
+</div>
 
 
 @code {
