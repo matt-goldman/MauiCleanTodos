@@ -1,0 +1,47 @@
+﻿.page-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.todo-card {
+    background-color: #c2c2c2;
+    margin: 30px;
+    border-radius: 30px;
+    height: 750px;
+    width: 450px;
+    padding: 20px;
+}
+
+.todo-list-button-list {
+    height: 80%;
+    overflow: auto;
+    padding: 10px;
+}
+
+.add-button-container {
+    height: 20%;
+    padding: 10px;
+}
+
+.add-button {
+    width: 170px;
+    height: 80px;
+    display: block;
+    background-color: #528abe;
+    border-radius: 20px;
+    color: #ffffff;
+    border: hidden;
+}
+
+.list-button {
+    width: 260px;
+    height: 70px;
+    border-radius: 35px;
+    text-align: center;
+    line-height: 100%;
+    vertical-align: middle;
+    border: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
