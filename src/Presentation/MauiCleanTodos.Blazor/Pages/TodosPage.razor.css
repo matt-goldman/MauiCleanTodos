@@ -7,9 +7,20 @@
     background-color: #c2c2c2;
     margin: 30px;
     border-radius: 30px;
-    height: 750px;
-    width: 450px;
+    height: 75vh;
+    width: 40vh;
     padding: 20px;
+}
+
+.item-dialog {
+    background-color: #c2c2c2;
+    margin: 30px;
+    border-radius: 30px;
+    height: 40vh;
+    width: 40vh;
+    padding: 20px;
+    bottom: 0px;
+    position: absolute;
 }
 
 .todo-list-button-list {
@@ -44,4 +55,15 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
+    margin-bottom: 10px;
+}
+
+.todo-item {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-bottom: 15px;
+    color: #0e4d88;
 }
