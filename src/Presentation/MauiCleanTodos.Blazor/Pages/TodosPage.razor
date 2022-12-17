@@ -3,6 +3,7 @@
 
 @page "/todos"
 @using System.Collections.ObjectModel;
+@using MauiCleanTodos.Shared.TodoItems;
 
 <div class="container">
     <div class="row mx-auto h-100">
@@ -18,7 +19,7 @@
                     }
                 </div>
                 <div class="add-button-container">
-                    <button class="add-button mx-auto align-middle">+ Add Todo List</button>
+                    <button class="add-button mx-auto align-middle" @onclick="AddNewList">+ Add Todo List</button>
                 </div>
             </div>
         </div>
@@ -46,9 +47,28 @@
             }
         </div>
         <div class="col">
-            <div class="item-dialog">
-                hello
-            </div>
+            @if(showItemDialog)
+            {
+                <div class="item-dialog">
+                    hello
+                </div>
+            }
+
+            @if (showListDialog)
+            {
+                <div class="item-dialog">
+                    <span class="dialog-title">New todo list</span>
+                    <input placeholder="List name" class="mct-input">
+                    <div class="colors-list">
+                        @foreach (var color in colours)
+                        {
+                            <div class="rounded-circle color" style="background-color:@color.Colour" @onclick="() => SelectColor(color.Colour)"></div>
+                        }
+                    </div>
+
+                    <button class="dialog-button mx-auto align-middle">OK</button>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -57,9 +77,16 @@
 @code {
     private ObservableCollection<TodoListDto> todoLists = new();
 
+    public ObservableCollection<ColourContainer> colours { get; set; } = new();
+
+    private NewTodoDto newTodoList = new();
+
     private bool hasTodos = false;
 
     private TodoListDto selectedList;
+
+    private bool showItemDialog = false;
+    private bool showListDialog = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -67,6 +94,11 @@
 
         if (firstRender)
         {
+            foreach (var colour in (Colours[])Enum.GetValues(typeof(Colours)))
+            {
+                colours.Add(new ColourContainer { Colour = colour });
+            }
+
             try
             {
                 var lists = await todoListService.GetTodos();
@@ -93,5 +125,28 @@
     private void SelectList(TodoListDto list)
     {
         selectedList = list;
+    }
+
+    private void AddNewList()
+    {
+        showListDialog = true;
+    }
+
+    private async Task AddNewItem(TodoListDto list, string title)
+    {
+        var newItem = new NewTodoItemDto
+        {
+            Title = title,
+            ListId = list.Id
+        };
+
+        var item = await todoItemService.CreateTodoItem(newItem);
+
+        list.Items.Add(item);
+    }
+
+    private void SelectColor (Colours colour)
+    {
+        newTodoList.Colour = colour;
     }
 }
