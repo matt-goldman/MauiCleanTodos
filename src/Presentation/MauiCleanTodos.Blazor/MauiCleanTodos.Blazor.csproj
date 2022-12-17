@@ -16,4 +16,8 @@
     <ProjectReference Include="..\ClientPackages\ApiClientBase\MauiCleanTodos.ApiClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
+
 </Project>

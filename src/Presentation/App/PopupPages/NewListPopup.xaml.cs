@@ -44,8 +44,3 @@ public partial class NewListPopup : Popup
 		}
 	}
 }
-
-public class ColourContainer
-{
-	public Colours Colour { get; set; }
-}

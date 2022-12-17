@@ -12,19 +12,12 @@
     public async void HandleLoginSucceeded()
     {
         var tokenResult = await tokenProvider.RequestAccessToken();
-
-        Console.WriteLine("[AuthenticaotrView] Got Token");
-
+        
         if (tokenResult.TryGetToken(out var token))
         {
-            Console.WriteLine($"[AuthenticaotrView] Token: {token.Value}");
             AuthHandler.SetAccessToken(token.Value);
 
             navigation.NavigateTo("/todos");
-        }
-        else
-        {
-            Console.WriteLine("No token");
         }
     }
 
