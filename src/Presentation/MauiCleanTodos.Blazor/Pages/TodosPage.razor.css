@@ -98,14 +98,11 @@
     display: flex;
     overflow-x: auto;
     margin-left: auto;
-    margin-right: auto;
-    padding-left: 5px;
-    padding-right: 5px;
+    /*margin-right: auto;*/
+/*    padding-left: 5px;
+*/    padding-right: 5px;
     flex-shrink: 0;
     flex-wrap: nowrap; /* [1] */
-    overflow-x: auto; /* [1] */
-    -webkit-overflow-scrolling: touch; /* [4] */
-    -ms-overflow-style: -ms-autohiding-scrollbar;
     text-align: center;
     color: black;
 }
