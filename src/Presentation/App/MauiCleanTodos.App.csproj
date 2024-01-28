@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- TODO: Add bottomsheet and auth for Windows and macOS -->
+		<!--<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0</TargetFrameworks>-->
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0</TargetFrameworks>
+		<!--<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>-->
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 		<OutputType Condition="'$(TargetFramework)' != 'net8.0'">Exe</OutputType>
@@ -62,10 +64,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="1.2.0" />
-	  <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="1.0.7" />
-	  <PackageReference Include="Goldie.MauiPlugins.PageResolver.Autoreg" Version="1.0.5" />
-	  <PackageReference Include="M.BindableProperty.Generator" Version="0.8.3" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+	  <PackageReference Include="Goldie.MauiPlugins.PageResolver" Version="2.0.1" />
+	  <PackageReference Include="M.BindableProperty.Generator" Version="0.11.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -94,6 +95,14 @@
 	  <MauiXaml Update="PopupPages\NewListPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls" Version="8.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Maui.Controls.Compatibility" Version="8.0.6" />
 	</ItemGroup>
 
 </Project>

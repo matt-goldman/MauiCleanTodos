@@ -19,7 +19,8 @@ public static partial class MauiProgram
 				fonts.AddFont("Viga-Regular.ttf", "Viga");
 				fonts.AddFont("FluentSystemIcons-Regular.ttf", "FluentIcons");
 			})
-			.UseMauiCommunityToolkit();
+			.UseMauiCommunityToolkit()
+			.UseAutodependencies();
 
 		builder.Services.RegisterMauiClient(opt =>
 		{
@@ -32,10 +33,6 @@ public static partial class MauiProgram
 
 		builder.Services.AddSingleton<IBottomSheet, BottomSheetControl>();
 
-		UseAutoreg(builder.Services);
-
 		return builder.Build();
 	}
-
-	static partial void UseAutoreg(IServiceCollection services);
 }
