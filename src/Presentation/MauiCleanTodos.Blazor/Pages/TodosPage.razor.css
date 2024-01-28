@@ -7,9 +7,29 @@
     background-color: #c2c2c2;
     margin: 30px;
     border-radius: 30px;
-    height: 750px;
-    width: 450px;
+    height: 75vh;
+    width: 40vh;
     padding: 20px;
+}
+
+.item-dialog {
+    background-color: #c2c2c2;
+    margin: 30px;
+    border-radius: 30px;
+    height: 40vh;
+    width: 40vh;
+    padding: 20px;
+    bottom: 0px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dialog-title {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
 }
 
 .todo-list-button-list {
@@ -44,4 +64,68 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
+    margin-bottom: 10px;
+}
+
+.dialog-button {
+    width: 175px;
+    height: 50px;
+    border-radius: 35px;
+    text-align: center;
+    line-height: 100%;
+    vertical-align: middle;
+    border: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    background-color: #A427F0;
+    color: white;
+}
+
+.todo-item {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-bottom: 15px;
+    color: #0e4d88;
+}
+
+.colors-list {
+    display: flex;
+    overflow-x: auto;
+    margin-left: auto;
+    /*margin-right: auto;*/
+/*    padding-left: 5px;
+*/    padding-right: 5px;
+    flex-shrink: 0;
+    flex-wrap: nowrap; /* [1] */
+    text-align: center;
+    color: black;
+}
+
+.colors-list::-webkit-scrollbar {
+    display: none;
+}
+
+.color {
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    flex: 0 0 auto;
+}
+
+.mct-input {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: #D3D3D3;
+    border-radius: 5px;
+    height: 50px;
+    padding: 5px;
+    border: 0;
 }

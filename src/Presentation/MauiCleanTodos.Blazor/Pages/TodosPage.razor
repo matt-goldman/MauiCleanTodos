@@ -3,6 +3,7 @@
 
 @page "/todos"
 @using System.Collections.ObjectModel;
+@using MauiCleanTodos.Shared.TodoItems;
 
 <div class="container">
     <div class="row mx-auto h-100">
@@ -13,27 +14,61 @@
                     {
                          @foreach (var list in todoLists)
                         {
-                            <button class="list-button mx-auto align-middle" style="background-color:@list.Colour">@list.Title</button>
+                            <button class="list-button mx-auto align-middle" style="background-color:@list.Colour" @onclick="() => SelectList(list)">@list.Title</button>
                         }
                     }
                 </div>
                 <div class="add-button-container">
-                    <button class="add-button mx-auto align-middle">+ Add Todo List</button>
+                    <button class="add-button mx-auto align-middle" @onclick="AddNewList">+ Add Todo List</button>
                 </div>
             </div>
         </div>
         <div class="col">
-            <div class="todo-card">
-                <div class="todo-list-button-list">
+            @if(selectedList is not null)
+            {
+                <div class="todo-card">
+                    <div class="todo-list-button-list">
+                        @foreach (var item in selectedList.Items)
+                        {
+                            <div class="todo-item">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="@item.Done" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                        @item.Title
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="add-button-container">
+                        <button class="add-button mx-auto align-middle">+ Add Todo Item</button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col">
+            @if(showItemDialog)
+            {
+                <div class="item-dialog">
+                    hello
+                </div>
+            }
 
+            @if (showListDialog)
+            {
+                <div class="item-dialog">
+                    <span class="dialog-title">New todo list</span>
+                    <input placeholder="List name" class="mct-input">
+                    <div class="colors-list">
+                        @foreach (var color in colours)
+                        {
+                            <div class="rounded-circle color" style="background-color:@color.Colour" @onclick="() => SelectColor(color.Colour)"></div>
+                        }
+                    </div>
+
+                    <button class="dialog-button mx-auto align-middle">OK</button>
                 </div>
-                <div class="add-button-container">
-                    <button class="add-button mx-auto align-middle">+ Add Todo Item</button>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            
+            }
         </div>
     </div>
 </div>
@@ -42,7 +77,16 @@
 @code {
     private ObservableCollection<TodoListDto> todoLists = new();
 
+    public ObservableCollection<ColourContainer> colours { get; set; } = new();
+
+    private NewTodoDto newTodoList = new();
+
     private bool hasTodos = false;
+
+    private TodoListDto selectedList;
+
+    private bool showItemDialog = false;
+    private bool showListDialog = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -50,10 +94,15 @@
 
         if (firstRender)
         {
+            foreach (var colour in (Colours[])Enum.GetValues(typeof(Colours)))
+            {
+                colours.Add(new ColourContainer { Colour = colour });
+            }
+
             try
             {
                 var lists = await todoListService.GetTodos();
-                AddTodoLists(lists);
+                GetTodoLists(lists);
             }
             catch (Exception ex)
             {
@@ -62,7 +111,7 @@
         }
     }
 
-    private void AddTodoLists(List<TodoListDto> lists)
+    private void GetTodoLists(List<TodoListDto> lists)
     {
         foreach (var list in lists)
         {
@@ -73,4 +122,31 @@
         StateHasChanged();
     }
 
+    private void SelectList(TodoListDto list)
+    {
+        selectedList = list;
+    }
+
+    private void AddNewList()
+    {
+        showListDialog = true;
+    }
+
+    private async Task AddNewItem(TodoListDto list, string title)
+    {
+        var newItem = new NewTodoItemDto
+        {
+            Title = title,
+            ListId = list.Id
+        };
+
+        var item = await todoItemService.CreateTodoItem(newItem);
+
+        list.Items.Add(item);
+    }
+
+    private void SelectColor (Colours colour)
+    {
+        newTodoList.Colour = colour;
+    }
 }
