@@ -236,3 +236,4 @@ _Pvt_Extensions
 /MauiCleanTodos.ndproj
 /.mfractor
 src/WebUI/ClientApp/package-lock.json
+/src/Presentation/WebUI/ClientApp/node_modules
