@@ -72,10 +72,10 @@ public class MainViewModelTests
         item!.Done = true;
         item.ListId++;
 
-        Action act = async () => await _viewModel.ItemChecked(item);
+        Func<Task> act = async () => await _viewModel.ItemChecked(item);
 
         // assert
-        act.Should().Throw<NullReferenceException>();
+        act.Should().ThrowAsync<NullReferenceException>();
     }
 
     
