@@ -46,7 +46,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	}
 
     [RelayCommand]
-	private async Task Login()
+	public async Task Login()
 	{
 		IsBusy = true;
 
@@ -59,7 +59,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	}
 
 	[RelayCommand]
-	private async Task AddList()
+	public async Task AddList()
 	{
 		IsBusy = true;
 
@@ -80,7 +80,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	}
 
 	[RelayCommand]
-	private async Task Delete(int id)
+	public async Task Delete(int id)
 	{
 		var confirmPopup = new ConfirmPopup("Delete list", true);
 		var result = await App.Current.MainPage.ShowPopupAsync(confirmPopup);
@@ -98,7 +98,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	}
 
 	[RelayCommand]
-	private void ShowList(int listId)
+	public void ShowList(int listId)
 	{
 		_listId = listId;
 		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
@@ -118,7 +118,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
 	}
 
     [RelayCommand]
-    private async Task ItemChecked(TodoItemDto item)
+    public async Task ItemChecked(TodoItemDto item)
     {
 		if (item is not null)
 		{
@@ -129,7 +129,7 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
     }
 
     [RelayCommand]
-    private async Task AddItem()
+    public async Task AddItem()
     {
         IsBusy = true;
 
@@ -145,14 +145,19 @@ public partial class MainViewModel : BaseViewModel, IRecipient<UserUpdatedMessag
                 Title = (string)newTitle
             };
 
-			var newDto = await _todoItemsService.CreateTodoItem(newItem);
-
-            TodoItems.Add(newDto);
-
-			await RefreshLists();
+			await AddNewItem(newItem);
         }
 
         IsBusy = false;
+    }
+
+	public async Task AddNewItem(NewTodoItemDto item)
+	{
+        var newDto = await _todoItemsService.CreateTodoItem(item);
+
+        TodoItems.Add(newDto);
+
+        await RefreshLists();
     }
 
     public async Task RefreshLists()

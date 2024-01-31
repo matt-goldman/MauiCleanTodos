@@ -35,27 +35,27 @@ public class MainViewModelTests
     }
 
     [Test]
-    public void UpdateTodoItem_Should_Succeed_When_Valid()
+    public async Task UpdateTodoItem_Should_Succeed_When_ValidAsync()
     {
         // arrange
         var items = _todoListsService.GetTodos().Result
             .Select(l => l.Items)
             .FirstOrDefault();
 
-        var item = items.FirstOrDefault();
+        var item = items!.FirstOrDefault()!;
 
         // act
         item.Done = true;
 
-        _viewModel.UpdateTodoItem(item);
+        await _viewModel.ItemChecked(item);
 
         _ = _viewModel.RefreshLists();
 
         var itemList = _viewModel.TodoLists.FirstOrDefault(l => l.Id == item.Id);
-        var itemToTest = itemList.Items.FirstOrDefault(i => i.Id == item.Id);
+        var itemToTest = itemList!.Items.FirstOrDefault(i => i.Id == item.Id);
 
         // assert
-        itemToTest.Done.Should().Be(true);
+        itemToTest!.Done.Should().Be(true);
     }
 
     [Test]
@@ -66,13 +66,13 @@ public class MainViewModelTests
             .Select(l => l.Items)
             .FirstOrDefault();
 
-        var item = items.FirstOrDefault();
+        var item = items!.FirstOrDefault();
 
         // act
-        item.Done = true;
+        item!.Done = true;
         item.ListId++;
 
-        Action act = () => _viewModel.UpdateTodoItem(item);
+        Action act = async () => await _viewModel.ItemChecked(item);
 
         // assert
         act.Should().Throw<NullReferenceException>();
@@ -80,7 +80,7 @@ public class MainViewModelTests
 
     
     [Test]
-    public void AddNewTodoItem_Should_Succeed_For_Valid_List()
+    public async Task AddNewTodoItem_Should_Succeed_For_Valid_ListAsync()
     {
         // arrange
         var newItemTitle = "Successful new item";
@@ -92,8 +92,7 @@ public class MainViewModelTests
         };
 
         // act
-        _ = _viewModel.AddNewTodoItem(item);
-        _ = _viewModel.RefreshLists();
+        await _viewModel.AddNewItem(item);
 
         var list = _viewModel.TodoLists.FirstOrDefault();
         var newItems = list.Items.Where(i => i.Title == newItemTitle);
@@ -115,7 +114,7 @@ public class MainViewModelTests
         };
 
         // act
-        Func<Task> act = async () => { await _viewModel.AddNewTodoItem(item); };
+        Func<Task> act = async () => { await _viewModel.AddNewItem(item); };
 
         // assert
         act.Should().ThrowAsync<NullReferenceException>();
