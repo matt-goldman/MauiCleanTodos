@@ -92,25 +92,25 @@ public partial class MainViewModel : BaseViewModel
 		}
 	}
 
-	[RelayCommand]
-	public void ShowList(int listId)
-	{
-		_listId = listId;
-		var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
+    [RelayCommand]
+    private void ShowList(int listId)
+    {
+        _listId = listId;
+        var selectedList = TodoLists.FirstOrDefault(l => l.Id == listId);
 
-		var itemsView = new TodoItemsView(selectedList, _todoItemsService);
+        TodoItems.Clear();
 
-		foreach (var item in selectedList.Items)
-		{
-			TodoItems.Add(item);
-		}
+        foreach (var item in selectedList.Items)
+        {
+            TodoItems.Add(item);
+        }
 
-		var itemsView = new TodoItemsView();
+        var itemsView = new TodoItemsView();
 
-		itemsView.BindingContext = this;
+        itemsView.BindingContext = this;
 
-		_bottomSheet.ShowBottomSheet(itemsView);
-	}
+        _bottomSheet.ShowBottomSheet(itemsView);
+    }
 
     [RelayCommand]
     public async Task ItemChecked(TodoItemDto item)

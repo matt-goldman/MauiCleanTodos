@@ -1,7 +1,7 @@
 ﻿using App.UnitTests.Mocks;
 using FluentAssertions;
-using MauiCleanTodos.ApiClient.Authentication;
 using MauiCleanTodos.ApiClient.Services;
+using MauiCleanTodos.App.Authentication;
 using MauiCleanTodos.App.Controls;
 using MauiCleanTodos.App.ViewModels;
 using MauiCleanTodos.Shared.TodoItems;

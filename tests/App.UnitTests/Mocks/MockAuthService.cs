@@ -1,4 +1,5 @@
 ﻿using MauiCleanTodos.ApiClient.Authentication;
+using MauiCleanTodos.App.Authentication;
 
 namespace App.UnitTests.Mocks;
 public class MockAuthService : IAuthService
