@@ -24,7 +24,9 @@ public static partial class MauiProgram
 			.UseMauiCommunityToolkit()
 			.UseAutodependencies();
 
-		builder.Services.RegisterApiClientServices(opt =>
+		builder.Services.AddTransient<AuthHandler>();
+
+		builder.Services.RegisterApiClientServices<AuthHandler>(opt =>
 		{
             opt.Authority	= "https://569a-163-53-144-8.ngrok-free.app";
             opt.BaseUrl		= "https://569a-163-53-144-8.ngrok-free.app";

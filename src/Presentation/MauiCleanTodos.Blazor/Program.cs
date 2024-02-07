@@ -7,8 +7,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 
-builder.Services.RegisterApiClientServices(opt =>
+
+builder.Services.RegisterApiClientServices<CustomAuthorizationMessageHandler>(opt =>
 {
     opt.Authority = builder.HostEnvironment.BaseAddress;
     opt.BaseUrl = builder.HostEnvironment.BaseAddress;
@@ -16,7 +18,6 @@ builder.Services.RegisterApiClientServices(opt =>
     opt.RedirectUri = $"{builder.HostEnvironment.BaseAddress}authentication/login-callback";
     //opt.Scope = "MauiCleanTodos.WebUIAPI openid profile offline_access";
 });
-
 
 builder.Services.AddOidcAuthentication(options =>
 {

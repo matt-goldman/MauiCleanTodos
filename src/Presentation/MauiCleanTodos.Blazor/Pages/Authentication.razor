@@ -2,7 +2,6 @@
 @inject IAccessTokenProvider tokenProvider
 @inject NavigationManager navigation
 
-@using MauiCleanTodos.ApiClient.Authentication;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="HandleLoginSucceeded" LogInFailed="LoginFailedFragment" />
 
@@ -15,8 +14,6 @@
         
         if (tokenResult.TryGetToken(out var token))
         {
-            AuthHandler.SetAccessToken(token.Value);
-
             navigation.NavigateTo("/todos");
         }
     }

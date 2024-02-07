@@ -1,5 +1,4 @@
-﻿using MauiCleanTodos.ApiClient.Authentication;
-using MauiCleanTodos.ApiClient.Services;
+﻿using MauiCleanTodos.ApiClient.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MauiCleanTodos.ApiClient;
@@ -12,12 +11,10 @@ public static class DependencyInjection
     /// <param name="services"></param>
     /// <param name="clientOptions"></param>
     /// <returns></returns>
-    public static IServiceCollection RegisterApiClientServices(this IServiceCollection services, Action<ApiClientOptions> clientOptions)
+    public static IServiceCollection RegisterApiClientServices<THandler>(this IServiceCollection services, Action<ApiClientOptions> clientOptions) where THandler : DelegatingHandler
     {
-        services.AddSingleton<AuthHandler>();
-
-        services.AddHttpClient(AuthHandler.AUTHENTICATED_CLIENT)
-            .AddHttpMessageHandler((s) => s.GetService<AuthHandler>());
+        services.AddHttpClient(Constants.AUTHENTICATED_CLIENT)
+            .AddHttpMessageHandler<THandler>();
 
         ApiClientOptions options = new();
 

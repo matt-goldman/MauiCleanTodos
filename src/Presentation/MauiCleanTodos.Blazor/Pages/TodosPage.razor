@@ -1,9 +1,12 @@
 ﻿@inject ITodoListsService todoListService
 @inject ITodoItemsService todoItemService
 
+@attribute [Authorize]
+
 @page "/todos"
 @using System.Collections.ObjectModel;
 @using MauiCleanTodos.Shared.TodoItems;
+@using Microsoft.AspNetCore.Authorization
 
 <div class="container">
     <div class="row mx-auto h-100">
@@ -14,7 +17,7 @@
                     {
                          @foreach (var list in todoLists)
                         {
-                            <button class="list-button mx-auto align-middle" style="background-color:@list.Colour" @onclick="() => SelectList(list)">@list.Title</button>
+                            <button class="list-button mx-auto align-middle @(list == selectedList ? "selected-list" : "")" style="background-color:@list.Colour" @onclick="() => SelectList(list)">@list.Title</button>
                         }
                     }
                 </div>
@@ -58,15 +61,15 @@
             {
                 <div class="item-dialog">
                     <span class="dialog-title">New todo list</span>
-                    <input placeholder="List name" class="mct-input">
+                    <input placeholder="List name" class="mct-input" @bind="newTodoList.Title">
                     <div class="colors-list">
                         @foreach (var color in colours)
                         {
-                            <div class="rounded-circle color" style="background-color:@color.Colour" @onclick="() => SelectColor(color.Colour)"></div>
+                            <div style="background-color:@color.Colour" @onclick="() => SelectColor(color.Colour)" class="rounded-circle color @(_selectedColour == color.Colour ? "selected-color" : "")"></div>
                         }
                     </div>
 
-                    <button class="dialog-button mx-auto align-middle">OK</button>
+                    <button class="dialog-button mx-auto align-middle" @onclick="async () => await AddNewTodoList()">OK</button>
                 </div>
             }
         </div>
@@ -85,6 +88,8 @@
 
     private TodoListDto selectedList;
 
+    private Colours? _selectedColour;
+
     private bool showItemDialog = false;
     private bool showListDialog = false;
 
@@ -101,8 +106,8 @@
 
             try
             {
-                var lists = await todoListService.GetTodos();
-                GetTodoLists(lists);
+
+                await GetTodoLists();
             }
             catch (Exception ex)
             {
@@ -111,8 +116,12 @@
         }
     }
 
-    private void GetTodoLists(List<TodoListDto> lists)
+    private async Task GetTodoLists()
     {
+        todoLists.Clear();
+
+        var lists = await todoListService.GetTodos();
+
         foreach (var list in lists)
         {
             todoLists.Add(list);
@@ -125,6 +134,8 @@
     private void SelectList(TodoListDto list)
     {
         selectedList = list;
+        showItemDialog = false;
+        showListDialog = false;
     }
 
     private void AddNewList()
@@ -145,8 +156,18 @@
         list.Items.Add(item);
     }
 
+    private async Task AddNewTodoList()
+    {
+        var todoList = await todoListService.NewTodoList(newTodoList);
+
+        await GetTodoLists();
+
+        showListDialog = false;
+    }
+
     private void SelectColor (Colours colour)
     {
         newTodoList.Colour = colour;
+        _selectedColour = colour;
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using IdentityModel.OidcClient;
 using MauiCleanTodos.ApiClient;
-using MauiCleanTodos.ApiClient.Authentication;
 using IBrowser = IdentityModel.OidcClient.Browser.IBrowser;
 
 namespace MauiCleanTodos.App.Authentication;
@@ -10,6 +9,8 @@ public interface IAuthService
     Task<bool> LoginAsync();
 
     Task<bool> RefreshLoginAsync();
+
+    Task<string> GetAccessToken();
 
     bool Logout();
 }
@@ -21,6 +22,9 @@ public class AuthService : IAuthService
     public static string RedirectUri { get; set; } = string.Empty;
 
     private readonly OidcClientOptions _options;
+
+    private string _accessToken;
+    private DateTimeOffset _accessTokenExpiration;
 
     public AuthService(
         ApiClientOptions options,
@@ -54,7 +58,7 @@ public class AuthService : IAuthService
             }
 
             await SetRefreshToken(loginResult.RefreshToken);
-            SetLoggedInState(loginResult?.AccessToken ?? String.Empty, loginResult?.IdentityToken ?? string.Empty);
+            SetLoggedInState(loginResult?.AccessToken ?? String.Empty, loginResult.AccessTokenExpiration, loginResult?.IdentityToken ?? string.Empty);
             return true;
         }
         catch (Exception ex)
@@ -70,7 +74,6 @@ public class AuthService : IAuthService
         try
         {
             ClearTokens();
-            AuthHandler.SetAccessToken(String.Empty);
             return true;
         }
         catch (Exception ex)
@@ -98,13 +101,14 @@ public class AuthService : IAuthService
         }
 
         await SetRefreshToken(result.RefreshToken);
-        SetLoggedInState(result?.AccessToken ?? String.Empty, result?.IdentityToken ?? string.Empty);
+        SetLoggedInState(result?.AccessToken ?? String.Empty, result.AccessTokenExpiration,  result?.IdentityToken ?? string.Empty);
         return true;
     }
 
-    private void SetLoggedInState(string token, string idToken)
+    private void SetLoggedInState(string token, DateTimeOffset tokenExpires, string idToken)
     {
-        AuthHandler.SetAccessToken(token);
+        _accessToken = token;
+        _accessTokenExpiration = DateTimeOffset.Now.AddSeconds(3600);
 
         var claims = ParseToken(idToken);
 
@@ -142,5 +146,20 @@ public class AuthService : IAuthService
             Console.WriteLine(e.Message);
             return null;
         }
+    }
+
+    public async Task<string> GetAccessToken()
+    {
+        if (_accessTokenExpiration > DateTimeOffset.Now.AddMinutes(2) && !string.IsNullOrEmpty(_accessToken))
+        {
+            return _accessToken;
+        }
+
+        if (await RefreshLoginAsync())
+        {
+            return _accessToken;
+        }
+
+        throw new Exception("Failed to get access token");
     }
 }
