@@ -22,7 +22,7 @@
                     }
                 </div>
                 <div class="add-button-container">
-                    <button class="add-button mx-auto align-middle" @onclick="AddNewList">+ Add Todo List</button>
+                    <button class="add-button mx-auto align-middle" @onclick="ShowNewListDialog">+ Add Todo List</button>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                         {
                             <div class="todo-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="@item.Done" id="flexCheckDefault">
+                                    <input class="form-check-input" type="checkbox" value="@item.Done" @onchange="async () => await TodoItemChanged(item)" id="flexCheckDefault">
                                     <label class="form-check-label" for="flexCheckDefault">
                                         @item.Title
                                     </label>
@@ -44,20 +44,13 @@
                         }
                     </div>
                     <div class="add-button-container">
-                        <button class="add-button mx-auto align-middle">+ Add Todo Item</button>
+                        <button class="add-button mx-auto align-middle" @onclick="ShowItemDialog">+ Add Todo Item</button>
                     </div>
                 </div>
             }
         </div>
         <div class="col">
-            @if(showItemDialog)
-            {
-                <div class="item-dialog">
-                    hello
-                </div>
-            }
-
-            @if (showListDialog)
+            @if(showListDialog)
             {
                 <div class="item-dialog">
                     <span class="dialog-title">New todo list</span>
@@ -70,6 +63,16 @@
                     </div>
 
                     <button class="dialog-button mx-auto align-middle" @onclick="async () => await AddNewTodoList()">OK</button>
+                </div>
+            }
+
+            @if (showItemDialog)
+            {
+                <div class="item-dialog">
+                    <span class="dialog-title">New todo item</span>
+                    <input placeholder="Item name" class="mct-input" @bind="newTodoItemDto.Title">
+
+                    <button class="dialog-button mx-auto align-middle" @onclick="async () => await AddNewItem()">OK</button>
                 </div>
             }
         </div>
@@ -86,12 +89,14 @@
 
     private bool hasTodos = false;
 
-    private TodoListDto selectedList;
+    private TodoListDto? selectedList;
 
     private Colours? _selectedColour;
 
     private bool showItemDialog = false;
     private bool showListDialog = false;
+
+    private NewTodoItemDto newTodoItemDto = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -134,26 +139,53 @@
     private void SelectList(TodoListDto list)
     {
         selectedList = list;
+        newTodoItemDto.ListId = list.Id;
         showItemDialog = false;
         showListDialog = false;
     }
 
-    private void AddNewList()
+    private void ShowNewListDialog()
     {
+        showItemDialog = false;
         showListDialog = true;
     }
 
-    private async Task AddNewItem(TodoListDto list, string title)
+    private void ShowItemDialog()
     {
-        var newItem = new NewTodoItemDto
+        showItemDialog = true;
+        showListDialog = false;
+    }
+
+    private async Task AddNewItem()
+    {
+        if (selectedList is null || string.IsNullOrEmpty(newTodoItemDto.Title))
         {
-            Title = title,
-            ListId = list.Id
-        };
+            return;
+        }
 
-        var item = await todoItemService.CreateTodoItem(newItem);
+        var selectedListId = selectedList.Id;
 
-        list.Items.Add(item);
+        var item = await todoItemService.CreateTodoItem(newTodoItemDto);
+
+        await GetTodoLists();
+
+        newTodoItemDto.Title = string.Empty;
+
+        showItemDialog = false;
+
+        selectedList = todoLists.FirstOrDefault(x => x.Id == selectedListId);
+    }
+
+    private async Task TodoItemChanged(TodoItemDto item)
+    {
+        Console.WriteLine($"Item changed: {item.Id} {item.Title}, done: {item.Done}");
+        
+        if (item is not null)
+        {
+            item.Done = !item.Done;
+
+            await todoItemService.UpdateTodoItem(item);
+        }
     }
 
     private async Task AddNewTodoList()
