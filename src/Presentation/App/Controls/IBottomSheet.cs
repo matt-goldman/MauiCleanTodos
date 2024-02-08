@@ -1,3 +1,5 @@
+using BottomSheet;
+
 #if NET8_0
 #else
 using BottomSheet;
@@ -17,9 +19,8 @@ public class BottomSheetControl : IBottomSheet
     {
         if (view is not View)
             return;
-
-#if NET8_0
-#else
+        
+#if __ANDROID__ || __IOS__
         App.Current.MainPage.ShowBottomSheet(view as View, animated);
 #endif
     }

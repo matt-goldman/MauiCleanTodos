@@ -35,6 +35,7 @@
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <CodesignKey>Apple Development: Matthew Goldman (2KZ79R9SHG)</CodesignKey>
 	  <CodesignProvision>VS: WildCard Development</CodesignProvision>
+      <CodesignEntitlements>Platforms/iOS/Entitlements.plist</CodesignEntitlements>
 	</PropertyGroup>
 
 	<ItemGroup>

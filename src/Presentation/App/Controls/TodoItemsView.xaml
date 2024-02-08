@@ -10,9 +10,9 @@
             StrokeThickness="0"
             StrokeShape="RoundRectangle 30,30,0,0">
         <Grid>
-            <VerticalStackLayout Padding="0,20"
+            <VerticalStackLayout Padding="20"
                                  Spacing="30">
-                <Button WidthRequest="130"
+                <Button WidthRequest="{OnPlatform Default=130, iOS=200}"
                         HeightRequest="40"
                         CornerRadius="20"
                         Text="+ Add Todo item"
