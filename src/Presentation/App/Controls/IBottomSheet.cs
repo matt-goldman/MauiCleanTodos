@@ -1,8 +1,6 @@
+#if __ANDROID__ || __IOS__
 using BottomSheet;
-
-#if NET8_0
-#else
-using BottomSheet;
+#elif NET8_0
 #endif
 
 
@@ -22,6 +20,7 @@ public class BottomSheetControl : IBottomSheet
         
 #if __ANDROID__ || __IOS__
         App.Current.MainPage.ShowBottomSheet(view as View, animated);
+#elif NET8_0 
 #endif
     }
 }
